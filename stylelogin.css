@@ -40,8 +40,8 @@ p.err {
 }
 .input-container input:focus,
 select:focus {
-    outline: none; 
-    border-color: #AFAFAF; 
+    outline: none; /* Menghilangkan outline */
+    border-color: #AFAFAF; /* Mengubah warna border saat focus */
 }
 
 
@@ -183,8 +183,9 @@ select {
     border-radius: 8px;
     padding: 12px 20px;
     border: 2px solid #AFAFAF; 
-    background-color: #eee; 
-    margin: 8px 0;
+    background-color: #eee;
+    width: 95%; 
+    margin: 8px 0; 
     font-family: "Montserrat Medium";
     color: #666666;
     margin-right: 20px;
@@ -265,7 +266,7 @@ button {
     left: 100%;
     width: 5%; 
     height: 70%;
-    border-right: 1px solid rgb(70, 70, 70);
+    border-right: 3px solid #E4E6EC;
     transform: translateX(-50%);
     z-index: 1;
 }
