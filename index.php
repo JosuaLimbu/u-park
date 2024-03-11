@@ -21,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $_SESSION['username'] = $username;
         $_SESSION['role'] = $role;
-        if ($role == 'Admin') {
+        if ($role == 'admin') {
             header("Location: $role/home/home.php");
-        } elseif ($role == 'Operator') {
+        } elseif ($role == 'operator') {
             header("Location: $role/home/home.php");
         }
     } else {
