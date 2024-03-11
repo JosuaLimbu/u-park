@@ -10,10 +10,10 @@ if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["rol
 <head>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account List</title>
+    <title>Info</title>
 	<link rel="icon" type="image/png" href="../../img/U-Park.png">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="accountlist.css">
+    <link rel="stylesheet" href="info.css">
 	
     
 </head>
@@ -31,7 +31,7 @@ if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["rol
 				</a>
 			</li>
 			<li>
-				<a href="../vehicleentry/vehicleentry.php">
+				<a href="/vehicleentry.php">
 					<i class='bx bx-car' ></i>
 					<span class="text">Vehicle Entry</span>
 				</a>
@@ -42,18 +42,18 @@ if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["rol
 					<span class="text">Plate Regist</span>
 				</a>
 			</li>
-			<li class="active">
+			<li>
 				<a href="../accountlist/accountlist.php">
 					<i class='bx bx-user-circle' ></i>
 					<span class="text">Account List</span>
 				</a>
 			</li>
-			<li>
-				<a href="../info/info.php">
-					<i class='bx bx-info-circle'></i>
-					<span class="text">Info</span>
-				</a>
-			</li>
+			<li class="active">
+			<a href="../info/info.php">
+				<i class='bx bx-info-circle'></i>
+				<span class="text">Info</span>
+			</a>
+		</li>
 		</ul>
 		<ul class="side-menu">
 			<li>
@@ -61,9 +61,9 @@ if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["rol
 				<i class='bx bx-log-out'></i>
         		<span class="text">Logout</span>
    		 	</a>
-			
 			</li>
 		</ul>
+		
 	</section>
 	<!-- SIDEBAR -->
 
@@ -93,7 +93,7 @@ if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["rol
 		<main>
 			<div class="head-title">
 			<div class="left" style="font-family: 'Montserrat', sans-serif; font-weight: 600">
-    			<p>Account List</p>
+    			<p>Info</p>
 			</div>
 
 				

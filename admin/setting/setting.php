@@ -10,7 +10,7 @@ if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["rol
 <head>
 	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Setting</title>
 	<link rel="icon" type="image/png" href="../../img/U-Park.png">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="setting.css">
@@ -26,13 +26,13 @@ if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["rol
 		<ul class="side-menu top">
 			<li>
 				<a href="../home/home.php">
-					<i class='bx bxs-home' ></i>
+					<i class='bx bx-home' ></i>
 					<span class="text">Home</span>
 				</a>
 			</li>
 			<li>
 				<a href="../vehicleentry/vehicleentry.php">
-					<i class='bx bxs-car' ></i>
+					<i class='bx bx-car' ></i>
 					<span class="text">Vehicle Entry</span>
 				</a>
 			</li>
@@ -44,8 +44,14 @@ if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["rol
 			</li>
 			<li>
 				<a href="../accountlist/accountlist.php">
-					<i class='bx bxs-user-circle' ></i>
+					<i class='bx bx-user-circle' ></i>
 					<span class="text">Account List</span>
+				</a>
+			</li>
+			<li>
+				<a href="../info/info.php">
+					<i class='bx bx-info-circle'></i>
+					<span class="text">Info</span>
 				</a>
 			</li>
 		</ul>
