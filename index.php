@@ -15,8 +15,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $role = $_POST['role'];
 
-    $sql = "SELECT * FROM tbl_account WHERE role='$role' AND username='$username' AND password='$password'";
-    $result = $conn->query($sql);
+    $sql = "SELECT * FROM tbl_account WHERE role=? AND BINARY username=? AND password=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $role, $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         $_SESSION['username'] = $username;
@@ -33,13 +36,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>U-Park</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="img/U-Park.png">
 </head>
@@ -62,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <i class="far fa-eye-slash" id="togglePassword"></i>
                 </div>
                 <?php if(isset($error_message)) { ?>
-                    <p class="err"><?php echo $error_message; ?></p>
+                <p class="err"><?php echo $error_message; ?></p>
                 <?php } ?>
                 <button type="submit">Sign In</button>
             </form>

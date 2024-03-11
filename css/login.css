@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 @font-face {
     font-family: 'Spinnaker';
-    src: url('fonts/Spinnaker-Regular.ttf') format('truetype');
+    src: url('../fonts/Spinnaker-Regular.ttf') format('truetype');
 }
 
 * {
@@ -37,6 +37,7 @@ p.err {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     color: red;
+	margin-right: 20px;
 }
 .input-container input:focus,
 select:focus {
