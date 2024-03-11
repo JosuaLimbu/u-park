@@ -48,6 +48,12 @@ if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["rol
 					<span class="text">Account List</span>
 				</a>
 			</li>
+			<li>
+			<a href="../info/info.php">
+				<i class='bx bx-info-circle'></i>
+				<span class="text">Info</span>
+			</a>
+		</li>
 		</ul>
 		<ul class="side-menu">
 			<li>
@@ -56,12 +62,7 @@ if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["rol
         		<span class="text">Logout</span>
    		 	</a>
 		</li>
-		<li>
-			<a href="../info/info.php">
-				<i class='bx bx-info-circle'></i>
-				<span class="text">Info</span>
-			</a>
-		</li>
+		
 		</ul>
 	</section>
 	<!-- SIDEBAR -->
