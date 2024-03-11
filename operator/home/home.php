@@ -6,5 +6,5 @@ if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["rol
 }
 echo "Welcome, " . $_SESSION["username"] . "! Ini halaman operator.";
 // Tombol logout
-echo "<br><br><a href='../logout.php'>Logout</a>";
+echo "<br><br><a href='../../logout.php'>Logout</a>";
 ?>

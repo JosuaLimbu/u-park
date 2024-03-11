@@ -22,9 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['username'] = $username;
         $_SESSION['role'] = $role;
         if ($role == 'admin') {
-            header("Location: $role/$role.php");
+            header("Location: $role/home/home.php");
         } elseif ($role == 'operator') {
-            header("Location: $role/$role.php");
+            header("Location: $role/home/home.php");
         }
     } else {
         $error_message = "Incorrect username or password.";
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>U-Park</title>
-    <link rel="stylesheet" href="stylelogin.css">
+    <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="img/U-Park.png">
 </head>
