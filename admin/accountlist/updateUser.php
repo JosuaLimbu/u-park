@@ -1,37 +1,131 @@
 <?php
+include 'connect.php';
+    
+if ($con->connect_error) {
+    die("Koneksi gagal: " . $con->connect_error);
+}
+
+if (isset($_POST['submit'])) {
+    $id = $_GET['updateid'];
+    $id = $_POST['id'];
+    $role = $_POST['role'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    //$create_at = $_POST('create_at');
+
+    $sql = "UPDATE `tbl_account` SET role='$role', username='$username', password='$password' WHERE id='$id'";
+    $result = mysqli_query($con, $sql); // Perbaikan: menambahkan tanda '='
+    
+    if ($result) {
+        echo "Data berhasil diperbarui.";
+    } else {
+        echo "Error: " . mysqli_error($con);
+    }
+}
+
+mysqli_close($con);
+?>
+
+
+<?php
 session_start();
 if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
     exit;
 }
-$page = 'accountlist'; //buat page aktif di sidebar
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account List</title>
-    <link rel="icon" type="image/png" href="../../img/U-Park.png">
+    <title>Home</title>
+	<link rel="icon" type="image/png" href="../../img/U-Park.png">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="accountlist.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+	
+    
 </head>
 <body>
-    <?php include '../components/sidebar/sidebar.php'; ?>
-    <!-- CONTENT -->
-    <section id="content">
-        <!-- Include navbar -->
-        <?php include '../components/navbar/navbar.php'; ?>
-        <!-- MAIN -->
-        <main>
-            <!-- Main content -->
-            <div class="head-title">
-                <div class="left" style="font-family: 'Montserrat', sans-serif; font-weight: 600">
-                    <p>Account List</p>
-                </div>
-            </div>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal">
+	<section id="sidebar">
+		<a href="#" class="brand">
+			<img src="../../img/U-Park.png" alt="" srcset="">
+			<span class="text">U-PARK</span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a href="home.php">
+					<i class='bx bx-home' ></i>
+					<span class="text">Home</span>
+				</a>
+			</li>
+			<li>
+				<a href="../vehicleentry/vehicleentry.php">
+					<i class='bx bx-car' ></i>
+					<span class="text">Vehicle Entry</span>
+				</a>
+			</li>
+			<li>
+				<a href="../plateregist/plateregist.php">
+					<i class='bx bx-plus-circle'></i>
+					<span class="text">Plate Regist</span>
+				</a>
+			</li>
+			<li>
+				<a href="../accountlist/accountlist.php">
+					<i class='bx bx-user-circle' ></i>
+					<span class="text">Account List</span>
+				</a>
+			</li>
+			<li>
+				<a href="../info/info.php">
+					<i class='bx bx-info-circle'></i>
+					<span class="text">Info</span>
+				</a>
+			</li>
+		</ul>
+		<ul class="side-menu">
+			<li>
+			<a href="../../logout.php" class="logout"> 
+				<i class='bx bx-log-out'></i>
+        		<span class="text">Logout</span>
+   		 	</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+    		<i class='bx bx-menu'></i>
+    		<input type="checkbox" id="switch-mode" hidden>
+    		<div class="profile">
+    			<p><?php echo $_SESSION["username"]; ?></p>
+    			<img class="profile-img" src="../img/Profile.svg">
+    			<img class="dropdown" src="../img/Dropdown.svg">
+    			<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        			<li><a class="dropdown-item" href="home.php">Home <i class='bx bx-home' ></i></a></li>
+        			<li><a class="dropdown-item" href="../profile/profile.php">Profile <i class='bx bx-user-circle' ></i></a></li>
+        			<li><a class="dropdown-item" href="../setting/setting.php">Setting <i class='bx bx-cog' ></i></a></li>
+    			</ul>
+			</div>
+
+</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+		<h2>Insert Data Account</h2>
+        <div class="container mt-5">
+        
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal">
             Insert Data
         </button>
 <div class="container tabel">
@@ -117,20 +211,15 @@ $page = 'accountlist'; //buat page aktif di sidebar
             </div>
         </div>  
     </div>
-            
-            </div>
-        </main>
-        <!-- MAIN -->
-    </section>
-    <!-- CONTENT -->
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="../components/js/script.js"></script>
-    <script src="../components/js/datetime.js"></script>
-    <script src="../components/js/dropdown.js"></script>
-    <script>
+        <script>
             function submitForm() {
                 var username = $('#username').val();
                 var password = $('#password').val();
@@ -171,5 +260,11 @@ $page = 'accountlist'; //buat page aktif di sidebar
                 });
             }
         </script>
+    
+
+	<script src="script.js"></script>
+	<script src="datetime.js"></script>
+	<script src="dropdown.js"></script>
+
 </body>
 </html>
