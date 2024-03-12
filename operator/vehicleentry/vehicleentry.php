@@ -1,9 +1,9 @@
 <?php
 session_start();
-if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
+if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["role"] != "operator") {
     exit;
 }
-$page = 'accountlist'; //buat page aktif di sidebar
+$page = 'vehicleentry'; //buat page aktif di sidebar
 ?>
 
 <!DOCTYPE html>
@@ -11,10 +11,10 @@ $page = 'accountlist'; //buat page aktif di sidebar
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account List</title>
+    <title>Vehicle Entry</title>
     <link rel="icon" type="image/png" href="../../img/U-Park.png">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="accountlist.css">
+    <link rel="stylesheet" href="vehicleentry.css">
 </head>
 <body>
     <?php include '../components/sidebar/sidebar.php'; ?>
@@ -27,7 +27,7 @@ $page = 'accountlist'; //buat page aktif di sidebar
             <!-- Main content -->
             <div class="head-title">
                 <div class="left" style="font-family: 'Montserrat', sans-serif; font-weight: 600">
-                    <p>Account List</p>
+                    <p>Vehicle Entry</p>
                 </div>
             </div>
 

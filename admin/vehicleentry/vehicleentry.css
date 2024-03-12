@@ -285,6 +285,7 @@ body {
 	font-family: var(--montserrat);
 	max-height: calc(100vh - 56px);
 	overflow-y: auto;
+	
 }
 #content main .head-title {
 	display: flex;
@@ -375,9 +376,10 @@ body {
 #content main .box-info li .text p {
 	color: var(--dark);	
 }
-
-
-
+#content main .table-data .order .text p {
+    line-height: 1.8; 
+	font-size: 18px;
+}
 
 
 #content main .table-data {
