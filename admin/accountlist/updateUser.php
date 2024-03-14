@@ -1,5 +1,5 @@
 <?php
-include 'connect.php';
+include '../../dabaseconnect/connect.php';
     
 if ($con->connect_error) {
     die("Koneksi gagal: " . $con->connect_error);

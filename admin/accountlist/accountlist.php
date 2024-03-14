@@ -1,4 +1,5 @@
 <?php
+//insert dg delete data qt da rubah so jadi mar yg delete masih ada bug, konng yang update blm jadi 
 session_start();
 if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
     exit;
@@ -49,36 +50,41 @@ $page = 'accountlist'; //buat page aktif di sidebar
                 <tbody>
                     <?php
                     include 'connect.php';
-
+                    
                     $sql = "SELECT * FROM `tbl_account`";
                     $result = mysqli_query($con, $sql);
                     if($result){
                         $count = 1;
                         while ($row=mysqli_fetch_assoc($result)){
                             $id = $row['id'];
-                            $role = $row['role'];
                             $name = $row['username'];
+                            $role = $row['role'];
+                            
                             $create_date = $row['create_at'];
 
                             echo '
-                            <tr>
+                            <tr>    
                                 <td>'.$count.'</td>
                                 <td>'.$name.'</td>
                                 <td>'.$role.'</td>
                                 <td>'.$create_date.'</td>
                                 <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_'.$id.'" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Options
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_'.$id.'">
-                                            <li><a class="dropdown-item" href="UpdateUser.php" onclick="showUpdateButton('.$id.')">Update</a></li>
-                                            <li><a class="dropdown-item" href="deleleteUser.php" onclick="showDeleteButton('.$id.')">Delete</a></li>
-                                        </ul>
-                                    </div>
-                                    <button id="updateButton_'.$id.'" class="btn btn-primary mt-1" style="display: none;">Update</button>
-                                    <button id="deleteButton_'.$id.'" class="btn btn-danger mt-1" style="display: none;">Delete</button>
-                                </td>
+                                <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_<?php echo $id; ?>" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Options
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_<?php echo $id; ?>">
+                                    <li><a class="dropdown-item" href="UpdateUser.php" onclick="showUpdateButton(<?php echo $id; ?>)">Update</a></li>
+                                    <li>
+                                        <form action="deleteUser.php" method="post">
+                                            <input type="hidden" name="id" value="<?php echo $id; ?>">
+                                            <button type="submit" class="dropdown-item" onclick="return confirm()">Delete</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                
                             </tr>';
                             $count++;
                         }
@@ -109,7 +115,7 @@ $page = 'accountlist'; //buat page aktif di sidebar
                                 <label for="role" class="form-label">Role</label>
                                 <select class="form-select" id="role" name="role" required>
                                     <option value="admin">Admin</option>
-                                    <option value="user">Operator</option>
+                                    <option value="operator">Operator</option>
                                 </select>
                             </div>
                             <button type="button" class="btn btn-success" onclick="submitForm()">Insert</button>
@@ -169,5 +175,7 @@ $page = 'accountlist'; //buat page aktif di sidebar
             });
         }
     </script>
+
+
 </body>
 </html>

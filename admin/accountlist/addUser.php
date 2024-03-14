@@ -1,30 +1,35 @@
 <?php
-// Include file untuk koneksi ke database
-include 'connect.php';
+session_start();
 
-// Cek koneksi ke database
-if ($con->connect_error) {
-    die("Koneksi gagal: " . $con->connect_error);
-}
+// Pastikan form data dikirimkan dengan metode POST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Include file koneksi ke database
+    include 'connect.php';
 
-// Cek apakah tombol submit ditekan
-if (isset($_POST['submit'])) {
-    // Ambil nilai dari form
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $role = $_POST['role'];
+    // Ambil nilai dari formulir
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $role = $_POST["role"];
 
-    // Query untuk memasukkan data ke dalam database
-    $sql = "INSERT INTO tbl_account (username, password, role) VALUES ('$username', '$password', '$role')";
+    // Tambahkan waktu saat ini
+    $currentDateTime = date('Y-m-d H:i:s');
+
+    // Contoh query untuk menyimpan data ke dalam database, termasuk waktu saat ini
+    $sql = "INSERT INTO tbl_account (username, password, role, create_at) VALUES ('$username', '$password', '$role', '$currentDateTime')";
 
     // Eksekusi query
-    if ($con->query($sql) === TRUE) {
-        echo "Data berhasil ditambahkan.";
+    if (mysqli_query($con, $sql)) {
+        // Jika query berhasil dijalankan, kirimkan respons berhasil ke client
+        echo "Data berhasil ditambahkan!";
     } else {
-        echo "Error: " . $sql . "<br>" . $con->error;
+        // Jika query gagal dijalankan, kirimkan pesan kesalahan ke client
+        echo "Error: " . $sql . "<br>" . mysqli_error($con);
     }
 
     // Tutup koneksi ke database
-    $con->close();
+    mysqli_close($con);
+} else {
+    // Jika tidak ada data yang dikirimkan dengan metode POST, kirimkan pesan error
+    echo "Metode pengiriman data bukan POST!";
 }
 ?>
