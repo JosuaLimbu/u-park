@@ -553,3 +553,36 @@ body {
 .dropdown-item:hover {
     background-color: #f2f2f2;
 }
+
+.dropdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    clear: both;
+    font-weight: normal;
+    color: #333333;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+/* Tambahkan styling untuk tombol pilihan "Admin" atau "Operator" */
+.modal-body .input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.modal-body .input-group::after {
+    content: '\25BC'; /* Symbol panah ke bawah */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.modal-body .form-select {
+    width: 100%;
+}

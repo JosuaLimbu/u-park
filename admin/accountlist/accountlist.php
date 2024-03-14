@@ -39,10 +39,11 @@ $page = 'accountlist'; //buat page aktif di sidebar
                     <p>Account List</p>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal">
-            Insert Data
-        </button>
         <div class="container tabel">
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#insertModal">
+                Insert Data
+            </button>
+        <br>
         <br>
             <table class="table">
                 <thead>
@@ -95,7 +96,7 @@ $page = 'accountlist'; //buat page aktif di sidebar
                 </tbody>
             </table>
         </div>
-        <div class="modal fade" id="insertModal" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
+        <div class="modal fade" id="insertModal"  aria-labelledby="insertModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -103,26 +104,48 @@ $page = 'accountlist'; //buat page aktif di sidebar
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <!-- Form menggunakan AJAX -->
-                        <form id="insertForm">
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="role" class="form-label">Role</label>
-                                <select class="form-select" id="role" name="role" required>
-                                    <option value="admin">Admin</option>
-                                    <option value="user">Operator</option>
-                                </select>
-                            </div>
-                            <button type="button" class="btn btn-success" onclick="submitForm()">Insert</button>
-                        </form>
-                    </div>
+                    <!-- Form menggunakan AJAX -->
+                    <form id="insertForm">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirm_password" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <select class="form-control" id="exampleFormControlSelect1" id="role" name="role" required>
+                                <option value="admin">Admin</option>
+                                <option value="user">Operator</option>
+                            </select>
+                        </div>
+                        <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="roleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="roleModalLabel">Select Role</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <button type="button" class="btn btn-primary btn-block" onclick="setRole('admin')">Admin</button>
+                <button type="button" class="btn btn-secondary btn-block" onclick="setRole('operator')">Operator</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+                        <button type="button" class="btn btn-info" onclick="submitForm()">Insert</button>
+                    </form>
+                </div>
+
                 </div>
             </div>
         </div>
@@ -137,45 +160,57 @@ $page = 'accountlist'; //buat page aktif di sidebar
     <script src="../components/js/datetime.js"></script>
     <script src="../components/js/dropdown.js"></script>
     <script>
-        function submitForm() {
-            var username = $('#username').val();
-            var password = $('#password').val();
-            var role = $('#role').val();
+    function submitForm() {
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var confirm_password = $('#confirm_password').val();
+        var role = $('#role').val();
 
-            if (username.trim() == '' || password.trim() == '' || role.trim() == '') {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Kolom data tidak boleh kosong!',
-                });
-                return;
-            }
-
-            var formData = $('#insertForm').serialize();
-
-            $.ajax({
-                type: 'POST',
-                url: 'addUser.php',
-                data: formData,
-                success: function(response) {
-                    console.log(response);
-                    $('#insertModal').modal('hide');
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Sukses',
-                        text: response,
-                    });
-                    // Clear form fields after successful insertion
-                    $('#username').val('');
-                    $('#password').val('');
-                    $('#role').val('');
-                    loadTable();
-                },
-                error: function(error) {
-                    console.error('Gagal menambahkan data:', error);
-                }
+        if (username.trim() == '' || password.trim() == '' || confirm_password.trim() == '' || role.trim() == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Kolom data tidak boleh kosong!',
             });
+            return;
         }
-    </script>
+
+        if (password !== confirm_password) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password dan Confirm Password berbeda',
+            });
+            return;
+        }
+
+        var formData = $('#insertForm').serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: 'addUser.php',
+            data: formData,
+            success: function(response) {
+                console.log(response);
+                $('#insertModal').modal('hide');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sukses',
+                    text: response,
+                });
+                // Clear form fields after successful insertion
+                $('#username').val('');
+                $('#password').val('');
+                $('#confirm_password').val('');
+                $('#role').val('');
+                loadTable();
+            },
+            error: function(error) {
+                console.error('Gagal menambahkan data:', error);
+            }
+        });
+    }
+</script>
+
 </body>
 </html>

@@ -1,5 +1,5 @@
 
-<section id="sidebar">
+<section id="sidebar" style="z-index: 0;">
     <a href="#" class="brand" style="text-decoration : none;">
         <img src="../../img/U-Park.png" alt="" srcset="">
         <span class="text">U-PARK</span>
