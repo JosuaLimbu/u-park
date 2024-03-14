@@ -18,7 +18,15 @@ $page = 'accountlist'; //buat page aktif di sidebar
     <link rel="stylesheet" href="accountlist.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 </head>
-<body>
+<style>
+    :root {
+    --blue: #04A6B5;}
+
+    a {
+	    text-decoration: none;
+    }
+</style>
+<body style="background-color: #eee;">
     <?php include '../components/sidebar/sidebar.php'; ?>
     <!-- CONTENT -->
     <section id="content">
@@ -32,10 +40,11 @@ $page = 'accountlist'; //buat page aktif di sidebar
                     <p>Account List</p>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal">
-            Insert Data
-        </button>
         <div class="container tabel">
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#insertModal">
+                Insert Data
+            </button>
+        <br>
         <br>
             <table class="table">
                 <thead>
@@ -93,7 +102,7 @@ $page = 'accountlist'; //buat page aktif di sidebar
                 </tbody>
             </table>
         </div>
-        <div class="modal fade" id="insertModal" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
+        <div class="modal fade" id="insertModal"  aria-labelledby="insertModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -115,7 +124,7 @@ $page = 'accountlist'; //buat page aktif di sidebar
                                 <label for="role" class="form-label">Role</label>
                                 <select class="form-select" id="role" name="role" required>
                                     <option value="admin">Admin</option>
-                                    <option value="operator">Operator</option>
+                                    <option value="user">Operator</option>
                                 </select>
                             </div>
                             <button type="button" class="btn btn-success" onclick="submitForm()">Insert</button>
@@ -135,21 +144,31 @@ $page = 'accountlist'; //buat page aktif di sidebar
     <script src="../components/js/datetime.js"></script>
     <script src="../components/js/dropdown.js"></script>
     <script>
-        function submitForm() {
-            var username = $('#username').val();
-            var password = $('#password').val();
-            var role = $('#role').val();
+    function submitForm() {
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var confirm_password = $('#confirm_password').val();
+        var role = $('#role').val();
 
-            if (username.trim() == '' || password.trim() == '' || role.trim() == '') {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Kolom data tidak boleh kosong!',
-                });
-                return;
-            }
+        if (username.trim() == '' || password.trim() == '' || confirm_password.trim() == '' || role.trim() == '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Kolom data tidak boleh kosong!',
+            });
+            return;
+        }
 
-            var formData = $('#insertForm').serialize();
+        if (password !== confirm_password) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password dan Confirm Password berbeda',
+            });
+            return;
+        }
+
+        var formData = $('#insertForm').serialize();
 
             $.ajax({
                 type: 'POST',
@@ -175,7 +194,5 @@ $page = 'accountlist'; //buat page aktif di sidebar
             });
         }
     </script>
-
-
 </body>
 </html>
