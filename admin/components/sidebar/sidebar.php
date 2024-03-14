@@ -32,7 +32,6 @@
                 <span class="text">Account List</span>
             </a>
         </li>
-        <!-- Add prefix to Bootstrap classes -->
         <li <?php if ($page == 'info') echo 'class="active"'; ?>>
             <a href="../info/info.php">
                 <i class='bx bx-info-circle'></i>

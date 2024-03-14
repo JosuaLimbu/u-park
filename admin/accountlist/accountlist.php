@@ -15,7 +15,6 @@ $page = 'accountlist'; //buat page aktif di sidebar
     <link rel="icon" type="image/png" href="../../img/U-Park.png">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="accountlist.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
 </head>
 <body>
     <?php include '../components/sidebar/sidebar.php'; ?>
@@ -34,57 +33,113 @@ $page = 'accountlist'; //buat page aktif di sidebar
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insertModal">
             Insert Data
         </button>
-<div class="container tabel">
-    <table class="table">
-        <thead>
-            <tr>
-              <th scope="col">No</th>
-                <th scope="col">Username</th>
-                <th scope="col">Role</th>
-                <th scope="col">Date time</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php
+        <div class="container tabel">
+        <div class="table-data">
+				<div class="order">
+					<table>
+						<thead>
+							<tr>
+								<th>No.</th>
+                                <th>Username</th>
+								<th>Role</th>
+                                <th>Create At</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+                    <?php
                     include 'connect.php';
 
-                        $sql = "SELECT * FROM `tbl_account`";
-                        $result = mysqli_query($con, $sql);
-                        if($result){
-                            $count = 1;
-                            while ($row=mysqli_fetch_assoc($result)){
-                                $id = $row['id'];
-                                $role = $row['role'];
-                                $name = $row['username'];
-                                $create_date = $row['create_at'];
+                    $sql = "SELECT * FROM `tbl_account`";
+                    $result = mysqli_query($con, $sql);
+                    if($result){
+                        $count = 1;
+                        while ($row=mysqli_fetch_assoc($result)){
+                            $id = $row['id'];
+                            $role = $row['role'];
+                            $name = $row['username'];
+                            $create_date = $row['create_at'];
 
-                                echo '
-                                <tr>
-                                    <td>'.$count.'</td>
-                                    <td>'.$name.'</td>
-                                    <td>'.$role.'</td>
-                                    <td>'.$create_date.'</td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_'.$id.'" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Options
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_'.$id.'">
-                                                <li><a class="dropdown-item" href="UpdateUser.php" onclick="showUpdateButton('.$id.')">Update</a></li>
-                                                <li><a class="dropdown-item" href="deleleteUser.php" onclick="showDeleteButton('.$id.')">Delete</a></li>
-                                            </ul>
-                                        </div>
-                                        <button id="updateButton_'.$id.'" class="btn btn-primary mt-1" style="display: none;">Update</button>
-                                        <button id="deleteButton_'.$id.'" class="btn btn-danger mt-1" style="display: none;">Delete</button>
-                                    </td>
-                                </tr>';
-                                $count++;
-                            }
+                            echo '
+                            <tr>
+                                <td>'.$count.'</td>
+                                <td>'.$name.'</td>
+                                <td>'.$role.'</td>
+                                <td>'.$create_date.'</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_'.$id.'" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Options
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_'.$id.'">
+                                            <li><a class="dropdown-item" href="UpdateUser.php" onclick="showUpdateButton('.$id.')">Update</a></li>
+                                            <li><a class="dropdown-item" href="deleleteUser.php" onclick="showDeleteButton('.$id.')">Delete</a></li>
+                                        </ul>
+                                    </div>
+                                    <button id="updateButton_'.$id.'" class="btn btn-primary mt-1" style="display: none;">Update</button>
+                                    <button id="deleteButton_'.$id.'" class="btn btn-danger mt-1" style="display: none;">Delete</button>
+                                </td>
+                            </tr>';
+                            $count++;
                         }
+                    }
                     ?>
-        </tbody>
-    </table> 
-</div> 
+                </tbody>
+					</table>
+				</div>
+				
+			</div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Date time</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    include 'connect.php';
+
+                    $sql = "SELECT * FROM `tbl_account`";
+                    $result = mysqli_query($con, $sql);
+                    if($result){
+                        $count = 1;
+                        while ($row=mysqli_fetch_assoc($result)){
+                            $id = $row['id'];
+                            $role = $row['role'];
+                            $name = $row['username'];
+                            $create_date = $row['create_at'];
+
+                            echo '
+                            <tr>
+                                <td>'.$count.'</td>
+                                <td>'.$name.'</td>
+                                <td>'.$role.'</td>
+                                <td>'.$create_date.'</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_'.$id.'" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Options
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_'.$id.'">
+                                            <li><a class="dropdown-item" href="UpdateUser.php" onclick="showUpdateButton('.$id.')">Update</a></li>
+                                            <li><a class="dropdown-item" href="deleleteUser.php" onclick="showDeleteButton('.$id.')">Delete</a></li>
+                                        </ul>
+                                    </div>
+                                    <button id="updateButton_'.$id.'" class="btn btn-primary mt-1" style="display: none;">Update</button>
+                                    <button id="deleteButton_'.$id.'" class="btn btn-danger mt-1" style="display: none;">Delete</button>
+                                </td>
+                            </tr>';
+                            $count++;
+                        }
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
         <div class="modal fade" id="insertModal" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -115,61 +170,57 @@ $page = 'accountlist'; //buat page aktif di sidebar
                     </div>
                 </div>
             </div>
-        </div>  
-    </div>
-            
-            </div>
+        </div>
         </main>
         <!-- MAIN -->
     </section>
     <!-- CONTENT -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../components/js/script.js"></script>
     <script src="../components/js/datetime.js"></script>
     <script src="../components/js/dropdown.js"></script>
     <script>
-            function submitForm() {
-                var username = $('#username').val();
-                var password = $('#password').val();
-                var role = $('#role').val();
+        function submitForm() {
+            var username = $('#username').val();
+            var password = $('#password').val();
+            var role = $('#role').val();
 
-                if (username.trim() == '' || password.trim() == '' || role.trim() == '') {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Kolom data tidak boleh kosong!',
-                    });
-                    return;
-                }
-
-                var formData = $('#insertForm').serialize();
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'addUser.php',
-                    data: formData,
-                    success: function(response) {
-                        console.log(response);
-                        $('#insertModal').modal('hide');
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Sukses',
-                            text: response,
-                        });
-                        // Clear form fields after successful insertion
-                        $('#username').val('');
-                        $('#password').val('');
-                        $('#role').val('');
-                        loadTable();
-                    },
-                    error: function(error) {
-                        console.error('Gagal menambahkan data:', error);
-                    }
+            if (username.trim() == '' || password.trim() == '' || role.trim() == '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Kolom data tidak boleh kosong!',
                 });
+                return;
             }
-        </script>
+
+            var formData = $('#insertForm').serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: 'addUser.php',
+                data: formData,
+                success: function(response) {
+                    console.log(response);
+                    $('#insertModal').modal('hide');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses',
+                        text: response,
+                    });
+                    // Clear form fields after successful insertion
+                    $('#username').val('');
+                    $('#password').val('');
+                    $('#role').val('');
+                    loadTable();
+                },
+                error: function(error) {
+                    console.error('Gagal menambahkan data:', error);
+                }
+            });
+        }
+    </script>
 </body>
 </html>
