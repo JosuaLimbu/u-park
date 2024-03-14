@@ -35,18 +35,18 @@ $page = 'accountlist'; //buat page aktif di sidebar
             Insert Data
         </button>
         <div class="container tabel">
-        <div class="table-data">
-				<div class="order">
-					<table>
-						<thead>
-							<tr>
-                                <th>Username</th>
-								<th>Role</th>
-                                <th>Create At</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
+        <br>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Date time</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
                     <?php
                     include 'connect.php';
 
@@ -62,6 +62,7 @@ $page = 'accountlist'; //buat page aktif di sidebar
 
                             echo '
                             <tr>
+                                <td>'.$count.'</td>
                                 <td>'.$name.'</td>
                                 <td>'.$role.'</td>
                                 <td>'.$create_date.'</td>
@@ -84,11 +85,7 @@ $page = 'accountlist'; //buat page aktif di sidebar
                     }
                     ?>
                 </tbody>
-					</table>
-				</div>
-				
-			</div>
-
+            </table>
         </div>
         <div class="modal fade" id="insertModal" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
             <div class="modal-dialog">
