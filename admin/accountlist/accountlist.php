@@ -17,7 +17,15 @@ $page = 'accountlist'; //buat page aktif di sidebar
     <link rel="stylesheet" href="accountlist.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 </head>
-<body>
+<style>
+    :root {
+    --blue: #04A6B5;}
+
+    a {
+	    text-decoration: none;
+    }
+</style>
+<body style="background-color: #eee;">
     <?php include '../components/sidebar/sidebar.php'; ?>
     <!-- CONTENT -->
     <section id="content">
