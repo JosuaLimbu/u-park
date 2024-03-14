@@ -15,6 +15,7 @@ $page = 'accountlist'; //buat page aktif di sidebar
     <link rel="icon" type="image/png" href="../../img/U-Park.png">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="accountlist.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 </head>
 <body>
     <?php include '../components/sidebar/sidebar.php'; ?>
@@ -39,7 +40,6 @@ $page = 'accountlist'; //buat page aktif di sidebar
 					<table>
 						<thead>
 							<tr>
-								<th>No.</th>
                                 <th>Username</th>
 								<th>Role</th>
                                 <th>Create At</th>
@@ -62,7 +62,6 @@ $page = 'accountlist'; //buat page aktif di sidebar
 
                             echo '
                             <tr>
-                                <td>'.$count.'</td>
                                 <td>'.$name.'</td>
                                 <td>'.$role.'</td>
                                 <td>'.$create_date.'</td>
@@ -89,56 +88,7 @@ $page = 'accountlist'; //buat page aktif di sidebar
 				</div>
 				
 			</div>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Date time</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    include 'connect.php';
 
-                    $sql = "SELECT * FROM `tbl_account`";
-                    $result = mysqli_query($con, $sql);
-                    if($result){
-                        $count = 1;
-                        while ($row=mysqli_fetch_assoc($result)){
-                            $id = $row['id'];
-                            $role = $row['role'];
-                            $name = $row['username'];
-                            $create_date = $row['create_at'];
-
-                            echo '
-                            <tr>
-                                <td>'.$count.'</td>
-                                <td>'.$name.'</td>
-                                <td>'.$role.'</td>
-                                <td>'.$create_date.'</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_'.$id.'" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Options
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_'.$id.'">
-                                            <li><a class="dropdown-item" href="UpdateUser.php" onclick="showUpdateButton('.$id.')">Update</a></li>
-                                            <li><a class="dropdown-item" href="deleleteUser.php" onclick="showDeleteButton('.$id.')">Delete</a></li>
-                                        </ul>
-                                    </div>
-                                    <button id="updateButton_'.$id.'" class="btn btn-primary mt-1" style="display: none;">Update</button>
-                                    <button id="deleteButton_'.$id.'" class="btn btn-danger mt-1" style="display: none;">Delete</button>
-                                </td>
-                            </tr>';
-                            $count++;
-                        }
-                    }
-                    ?>
-                </tbody>
-            </table>
         </div>
         <div class="modal fade" id="insertModal" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
             <div class="modal-dialog">
