@@ -1,14 +1,14 @@
 <?php
 session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $servername = "localhost"; 
+    $servername = "localhost";
     $username = "root";
-    $password = "limbujosua23"; 
-    $dbname = "db_upark"; 
+    $password = "limbujosua23";
+    $dbname = "db_upark";
     $conn = new mysqli($servername, $username, $password, $dbname);
 
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        die ("Connection failed: " . $conn->connect_error);
     }
 
     $username = $_POST['username'];
@@ -39,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" type="image/png" href="img/U-Park.png">
 </head>
+
 <body>
     <div class="container" id="container">
         <div class="form-container sign-in-container">
@@ -65,8 +67,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="password" name="password" id="password" placeholder="Password" required />
                     <i class="far fa-eye-slash" id="togglePassword"></i>
                 </div>
-                <?php if(isset($error_message)) { ?>
-                <p class="err"><?php echo $error_message; ?></p>
+                <?php if (isset ($error_message)) { ?>
+                    <p class="err">
+                        <?php echo $error_message; ?>
+                    </p>
                 <?php } ?>
                 <button type="submit">Sign In</button>
             </form>
@@ -81,22 +85,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
     <script>
-    const togglePassword = document.getElementById('togglePassword');
-    const password = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
 
-    togglePassword.addEventListener('click', function() {
-        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-        password.setAttribute('type', type);
-        if (type === 'password') {
-            this.classList.remove('fa-eye');
-            this.classList.add('fa-eye-slash');
-        } else {
-            this.classList.remove('fa-eye-slash');
-            this.classList.add('fa-eye');
-        }
-    });
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            if (type === 'password') {
+                this.classList.remove('fa-eye');
+                this.classList.add('fa-eye-slash');
+            } else {
+                this.classList.remove('fa-eye-slash');
+                this.classList.add('fa-eye');
+            }
+        });
     </script>
 
 
 </body>
+
 </html>

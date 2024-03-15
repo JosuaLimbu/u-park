@@ -16,6 +16,7 @@ $page = ''; //buat page aktif di sidebar
     <link rel="icon" type="image/png" href="../../img/U-Park.png">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="setting.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -27,12 +28,14 @@ $page = ''; //buat page aktif di sidebar
         <!-- MAIN -->
         <main>
             <!-- Main content -->
-            <div class="head-title">
-                <div class="left" style="font-family: 'Montserrat', sans-serif; font-weight: 600">
-                    <p>Setting</p>
-                </div>
-            </div>
+            <div class="container">
+        <h2>Change Password</h2>
+        
+        <form action="changePas.php" method="POST">
+            <label for="old_password">Current Password:</label><br>
+            <input type="password" id="old_password" name="old_password" required><br>
 
+<<<<<<< HEAD
             <ul class="box-info">
                 <li>
                     <span class="text">
@@ -75,6 +78,17 @@ $page = ''; //buat page aktif di sidebar
                     </span>
                 </div>
             </div>
+=======
+            <label for="new_password">New Password:</label><br>
+            <input type="password" id="new_password" name="new_password" required><br>
+
+            <label for="confirm_new_password">Confirm New Password:</label><br>
+            <input type="password" id="confirm_new_password" name="confirm_new_password" required><br>
+            <br>
+            <button type="submit" class="btn btn-primary">Change Password</button>
+        </form>
+    </div>
+>>>>>>> c220c0ea72addbb28de70b814bcfde9cdc25f952
         </main>
         <!-- MAIN -->
     </section>
