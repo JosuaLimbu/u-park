@@ -15,7 +15,7 @@ if (isset ($_POST['submit'])) {
     //$create_at = $_POST('create_at');
 
     $sql = "UPDATE `tbl_account` SET role='$role', username='$username', password='$password' WHERE id='$id'";
-    $result = mysqli_query($con, $sql); // Perbaikan: menambahkan tanda '='
+    $result = mysqli_query($con, $sql);
 
     if ($result) {
         echo "Data berhasil diperbarui.";
