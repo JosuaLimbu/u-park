@@ -1,30 +1,22 @@
 <?php
 session_start();
-
-// Pastikan metode pengiriman data adalah POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Include file koneksi ke database
     include '../../dabaseconnect/connect.php';
+    if (isset ($_POST["id"]) && isset ($_POST["username"])) {
+        $id = $_POST["id"];
+        $username = $_POST["username"];
 
-    // Ambil ID pengguna yang akan dihapus dari formulir
-    $id = $_POST["id"];
+        $sql = "DELETE FROM tbl_account WHERE id = $id";
 
-    // Query untuk menghapus pengguna dari database
-    $sql = "DELETE FROM tbl_account WHERE id = '$id'";
-
-    // Eksekusi query
-    if (mysqli_query($con, $sql)) {
-        // Jika query berhasil dijalankan, kirimkan respons berhasil ke client
-        echo "Pengguna berhasil dihapus!";
+        if (mysqli_query($con, $sql)) {
+            echo "Pengguna dengan username $username berhasil dihapus!";
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($con);
+        }
+        mysqli_close($con);
     } else {
-        // Jika query gagal dijalankan, kirimkan pesan kesalahan ke client
-        echo "Error: " . $sql . "<br>" . mysqli_error($con);
+        echo "ID pengguna atau username tidak ditemukan!";
     }
-
-    // Tutup koneksi ke database
-    mysqli_close($con);
 } else {
-    // Jika tidak ada data yang dikirimkan dengan metode POST, kirimkan pesan error
-    echo "Metode pengiriman data bukan POST!";
+    echo "Metode pengiriman data bukan POST! $username $id";
 }
-?>

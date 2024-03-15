@@ -81,18 +81,16 @@ $page = 'accountlist'; //buat page aktif di sidebar
                                 <td>' . $create_date . '</td>
                                 <td>
                                     <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_' . $id . '" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_<?php echo $id; ?>" data-bs-toggle="dropdown" aria-expanded="false">
                                             Options
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_<?php echo $id; ?>">
-                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="<?php echo $id; ?>">Update</a></li>
-                                            <li><a class="dropdown-item" href="deleleteUser.php" onclick="showDeleteButton(<?php echo $id; ?>)">Delete</a></li>
+                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="' . $id . '" data-username= "' . $name . '";>Update</a></li>
+                                            <li><a class="dropdown-item delete-account" href="#" data-id="' . $id . '" data-username= "' . $name . '";> Delete</a></li>
                                         </ul>
-
-
                                     </div>
-                                    <button id="updateButton_' . $id . '" class="btn btn-primary mt-1" style="display: none;">Update</button>
-                                    <button id="deleteButton_' . $id . '" class="btn btn-danger mt-1" style="display: none;">Delete</button>
+                                    <button id="updateButton_<?php echo $id; ?>" class="btn btn-primary mt-1" style="display: none;">Update</button>
+                                    <button id="deleteButton_<?php echo $id; ?>" class="btn btn-danger mt-1" style="display: none;">Delete</button>
                                 </td>
                             </tr>';
                                 $count++;
@@ -228,12 +226,49 @@ $page = 'accountlist'; //buat page aktif di sidebar
                     $('#updateModalContainer').html(response);
                     $('#updateModal').modal('show');
 
-                    // Isi nilai username ke dalam input
                     var username = $('#username_' + id).text();
                     $('#update_username').val(username);
                 }
             });
         }
+        $(document).ready(function () {
+            $('.delete-account').click(function (e) {
+                e.preventDefault(); // Menghentikan perilaku default tautan
+
+                var id = $(this).data('id');
+                var username = $(this).data('username');
+
+                var confirmation = confirm("Are you sure you want to delete the account '" + username + "'?");
+                if (confirmation) {
+                    $.ajax({
+                        type: "POST",
+                        url: "deleteUser.php",
+                        data: {
+                            id: id
+                        },
+                        success: function (response) {
+                            // Tampilkan popup pemberitahuan jika berhasil
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Account deleted successfully!',
+                            }).then(() => {
+                                location.reload();
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong! Please try again later.',
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
 
 
 
