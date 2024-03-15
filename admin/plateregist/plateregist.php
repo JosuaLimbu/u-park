@@ -1,13 +1,14 @@
 <?php
 session_start();
 if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
-    exit;
+    header("Location: http://localhost/upark");
 }
 $page = 'plateregist'; //buat page aktif di sidebar
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@ $page = 'plateregist'; //buat page aktif di sidebar
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="plateregist.css">
 </head>
+
 <body>
     <?php include '../components/sidebar/sidebar.php'; ?>
     <!-- CONTENT -->
@@ -35,20 +37,22 @@ $page = 'plateregist'; //buat page aktif di sidebar
                 <li>
                     <span class="text">
                         <h3>Welcome</h3>
-                        <p><?php echo $_SESSION["username"]; ?></p>
+                        <p>
+                            <?php echo $_SESSION["username"]; ?>
+                        </p>
                     </span>
                 </li>
                 <li>
-                    <i class='bx bx-car' ></i>
+                    <i class='bx bx-car'></i>
                     <span class="text">
                         <h3>100 Vehicle</h3>
                         <p>Today</p>
                     </span>
                 </li>
                 <li>
-                    <i class='bx bxs-time-five' ></i>
+                    <i class='bx bxs-time-five'></i>
                     <span class="text">
-                        <h3 id="current-time"></h3> 
+                        <h3 id="current-time"></h3>
                         <p id="current-date"></p>
                     </span>
                 </li>
@@ -60,13 +64,13 @@ $page = 'plateregist'; //buat page aktif di sidebar
                         <h3>About U-Park</h3>
                     </div>
                     <span class="text">
-                        <p>U-Park is a parking management system that uses Number Plate Recognition (NPR) 
-                            technology to manage parking at Klabat University. The U-Park application 
-                            utilizes NPR technology to detect and record vehicle license plates as they 
-                            enter the campus parking area. With U-Park, parking managers can monitor and 
-                            manage parking capacity, and optimize the use of parking spaces. In addition, 
-                            admins and operators can easily register vehicles, access information about the 
-                            availability of parking spaces. Thus, U-Park provides an effective and efficient 
+                        <p>U-Park is a parking management system that uses Number Plate Recognition (NPR)
+                            technology to manage parking at Klabat University. The U-Park application
+                            utilizes NPR technology to detect and record vehicle license plates as they
+                            enter the campus parking area. With U-Park, parking managers can monitor and
+                            manage parking capacity, and optimize the use of parking spaces. In addition,
+                            admins and operators can easily register vehicles, access information about the
+                            availability of parking spaces. Thus, U-Park provides an effective and efficient
                             solution in managing the parking system on the Klabat University campus.</p>
                     </span>
                 </div>
@@ -80,4 +84,5 @@ $page = 'plateregist'; //buat page aktif di sidebar
     <script src="../components/js/datetime.js"></script>
     <script src="../components/js/dropdown.js"></script>
 </body>
+
 </html>

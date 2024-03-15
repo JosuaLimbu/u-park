@@ -1,30 +1,24 @@
 <?php
-// Include file untuk koneksi ke database
 include 'connect.php';
 
-// Cek koneksi ke database
-if ($con->connect_error) {
-    die("Koneksi gagal: " . $con->connect_error);
-}
-
-// Cek apakah tombol submit ditekan
-if (isset($_POST['submit'])) {
-    // Ambil nilai dari form
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $role = $_POST['role'];
 
-    // Query untuk memasukkan data ke dalam database
-    $sql = "INSERT INTO tbl_account (username, password, role) VALUES ('$username', '$password', '$role')";
+    $create_at = date("j F Y");
+    $sql = "INSERT INTO `tbl_account` (role, username, password, create_at) VALUES ('$role', '$username', '$password', '$create_at')";
+    $result = mysqli_query($con, $sql);
 
-    // Eksekusi query
-    if ($con->query($sql) === TRUE) {
-        echo "Data berhasil ditambahkan.";
+    if ($result) {
+        http_response_code(200);
+        echo "Account added successfully!";
     } else {
-        echo "Error: " . $sql . "<br>" . $con->error;
+        http_response_code(500);
+        echo "Failed to add account.";
     }
-
-    // Tutup koneksi ke database
-    $con->close();
+} else {
+    http_response_code(400);
+    echo "Bad request!";
 }
 ?>

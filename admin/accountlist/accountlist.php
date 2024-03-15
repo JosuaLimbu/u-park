@@ -1,6 +1,7 @@
 <?php
 session_start();
-if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
+if (!isset ($_SESSION["username"]) || !isset ($_SESSION["role"]) || $_SESSION["role"] != "admin") {
+    header("Location: http://localhost/upark");
     exit;
 }
 $page = 'accountlist'; //buat page aktif di sidebar
@@ -8,6 +9,7 @@ $page = 'accountlist'; //buat page aktif di sidebar
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,12 +21,14 @@ $page = 'accountlist'; //buat page aktif di sidebar
 </head>
 <style>
     :root {
-    --blue: #04A6B5;}
+        --blue: #04A6B5;
+    }
 
     a {
-	    text-decoration: none;
+        text-decoration: none;
     }
 </style>
+
 <body style="background-color: #eee;">
     <?php include '../components/sidebar/sidebar.php'; ?>
     <!-- CONTENT -->
@@ -39,116 +43,109 @@ $page = 'accountlist'; //buat page aktif di sidebar
                     <p>Account List</p>
                 </div>
             </div>
-        <div class="container tabel">
-        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#insertModal">
-                Insert Data
-            </button>
-        <br>
-        <br>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Date time</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    include 'connect.php';
+            <div class="container tabel">
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#insertModal">
+                    Insert Data
+                </button>
+                <br>
+                <br>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Create At</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        include 'connect.php';
 
-                    $sql = "SELECT * FROM `tbl_account`";
-                    $result = mysqli_query($con, $sql);
-                    if($result){
-                        $count = 1;
-                        while ($row=mysqli_fetch_assoc($result)){
-                            $id = $row['id'];
-                            $role = $row['role'];
-                            $name = $row['username'];
-                            $create_date = $row['create_at'];
+                        $sql = "SELECT * FROM `tbl_account`";
+                        $result = mysqli_query($con, $sql);
+                        if ($result) {
+                            $count = 1;
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $id = $row['id'];
+                                $role = $row['role'];
+                                $name = $row['username'];
+                                $create_date = $row['create_at'];
 
-                            echo '
+                                echo '
                             <tr>
-                                <td>'.$count.'</td>
-                                <td>'.$name.'</td>
-                                <td>'.$role.'</td>
-                                <td>'.$create_date.'</td>
+                                <td>' . $count . '</td>
+                                <td>' . $name . '</td>
+                                <td>' . $role . '</td>
+                                <td>' . $create_date . '</td>
                                 <td>
                                     <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_'.$id.'" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_' . $id . '" data-bs-toggle="dropdown" aria-expanded="false">
                                             Options
                                         </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_'.$id.'">
-                                            <li><a class="dropdown-item" href="UpdateUser.php" onclick="showUpdateButton('.$id.')">Update</a></li>
-                                            <li><a class="dropdown-item" href="deleleteUser.php" onclick="showDeleteButton('.$id.')">Delete</a></li>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_<?php echo $id; ?>">
+                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="<?php echo $id; ?>">Update</a></li>
+                                            <li><a class="dropdown-item" href="deleleteUser.php" onclick="showDeleteButton(<?php echo $id; ?>)">Delete</a></li>
                                         </ul>
+
+
                                     </div>
-                                    <button id="updateButton_'.$id.'" class="btn btn-primary mt-1" style="display: none;">Update</button>
-                                    <button id="deleteButton_'.$id.'" class="btn btn-danger mt-1" style="display: none;">Delete</button>
+                                    <button id="updateButton_' . $id . '" class="btn btn-primary mt-1" style="display: none;">Update</button>
+                                    <button id="deleteButton_' . $id . '" class="btn btn-danger mt-1" style="display: none;">Delete</button>
                                 </td>
                             </tr>';
-                            $count++;
+                                $count++;
+                            }
                         }
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-        <div class="modal fade" id="insertModal"  aria-labelledby="insertModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="insertModalLabel">Insert Users</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <?php include 'modalupdate.php'; ?>
+
+            <div class="modal fade" id="insertModal" aria-labelledby="insertModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="insertModalLabel">Insert Users</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <!-- Form menggunakan AJAX -->
+                            <form id="insertForm">
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirm_password" class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="confirm_password"
+                                        name="confirm_password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="role" class="form-label">Role</label>
+                                    <select class="form-control" id="exampleFormControlSelect1" name="role" required>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Operator">Operator</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn btn-info" onclick="submitForm()"
+                                    name="submit">Insert</button>
+                            </form>
+                        </div>
+
                     </div>
-                    <div class="modal-body">
-                    <!-- Form menggunakan AJAX -->
-                    <form id="insertForm">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="confirm_password" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="role" class="form-label">Role</label>
-                            <select class="form-control" id="exampleFormControlSelect1" id="role" name="role" required>
-                                <option value="admin">Admin</option>
-                                <option value="user">Operator</option>
-                            </select>
-                        </div>
-                        <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="roleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="roleModalLabel">Select Role</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <button type="button" class="btn btn-primary btn-block" onclick="setRole('admin')">Admin</button>
-                <button type="button" class="btn btn-secondary btn-block" onclick="setRole('operator')">Operator</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-                        <button type="button" class="btn btn-info" onclick="submitForm()">Insert</button>
-                    </form>
-                </div>
-
                 </div>
             </div>
-        </div>
         </main>
         <!-- MAIN -->
     </section>
@@ -160,57 +157,91 @@ $page = 'accountlist'; //buat page aktif di sidebar
     <script src="../components/js/datetime.js"></script>
     <script src="../components/js/dropdown.js"></script>
     <script>
-    function submitForm() {
-        var username = $('#username').val();
-        var password = $('#password').val();
-        var confirm_password = $('#confirm_password').val();
-        var role = $('#role').val();
-
-        if (username.trim() == '' || password.trim() == '' || confirm_password.trim() == '' || role.trim() == '') {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Kolom data tidak boleh kosong!',
-            });
-            return;
-        }
-
-        if (password !== confirm_password) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Password dan Confirm Password berbeda',
-            });
-            return;
-        }
-
-        var formData = $('#insertForm').serialize();
-
-        $.ajax({
-            type: 'POST',
-            url: 'addUser.php',
-            data: formData,
-            success: function(response) {
-                console.log(response);
-                $('#insertModal').modal('hide');
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Sukses',
-                    text: response,
-                });
-                // Clear form fields after successful insertion
-                $('#username').val('');
-                $('#password').val('');
-                $('#confirm_password').val('');
-                $('#role').val('');
-                loadTable();
-            },
-            error: function(error) {
-                console.error('Gagal menambahkan data:', error);
-            }
+        $(document).ready(function () {
+            // Set default value for Role dropdown
+            $('#role').val('admin');
         });
-    }
-</script>
+
+        function submitForm() {
+            var username = $('#username').val();
+            var password = $('#password').val();
+            var confirm_password = $('#confirm_password').val();
+            var role = $('#exampleFormControlSelect1').val();
+
+            // Validasi input
+            if (username.trim() === '' || password.trim() === '' || confirm_password.trim() === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please fill in all fields!',
+                });
+                return; // Hentikan proses jika ada kolom yang kosong
+            }
+
+            // Validasi password
+            if (password !== confirm_password) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Password and Confirm Password do not match!',
+                });
+                return;
+            }
+
+            // Kirim data ke server menggunakan Ajax
+            $.ajax({
+                type: "POST",
+                url: "addUser.php",
+                data: {
+                    username: username,
+                    password: password,
+                    role: role
+                },
+                success: function (response) {
+                    // Tampilkan popup pemberitahuan jika berhasil
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Account added successfully!',
+                    }).then(() => {
+                        location.reload(); // Refresh halaman setelah menambahkan akun
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                    // Tampilkan pesan error jika terjadi kesalahan
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong! Please try again later.',
+                    });
+                }
+            });
+        }
+
+
+        function showUpdateButton(id) {
+            $.ajax({
+                url: 'modalupdate.php',
+                type: 'GET',
+                success: function (response) {
+                    $('#updateModalContainer').html(response);
+                    $('#updateModal').modal('show');
+
+                    // Isi nilai username ke dalam input
+                    var username = $('#username_' + id).text();
+                    $('#update_username').val(username);
+                }
+            });
+        }
+
+
+
+    </script>
+
+
+
 
 </body>
+
 </html>
