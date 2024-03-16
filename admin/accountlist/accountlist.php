@@ -74,7 +74,7 @@ $page = 'accountlist'; //buat page aktif di sidebar
                                 $create_date = $row['create_at'];
 
                                 echo '
-                            <tr>
+                            <tr id = ' . $row['id'] . '>
                                 <td>' . $count . '</td>
                                 <td>' . $name . '</td>
                                 <td>' . $role . '</td>
@@ -85,12 +85,12 @@ $page = 'accountlist'; //buat page aktif di sidebar
                                             Options
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_<?php echo $id; ?>">
-                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="' . $id . '" data-username= "' . $name . '";>Update</a></li>
-                                            <li><a class="dropdown-item delete-account" href="#" data-id="' . $id . '" data-username= "' . $name . '";> Delete</a></li>
+                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="' . $row['id'] . '";>Update</a></li>
+                                            <li><a class="dropdown-item delete-account" href="#" data-id="' . $row['id'] . '" ; onclick = "deletedata(' . $row['id'] . ')"> Delete</a></li>
                                         </ul>
                                     </div>
-                                    <button id="updateButton_<?php echo $id; ?>" class="btn btn-primary mt-1" style="display: none;">Update</button>
-                                    <button id="deleteButton_<?php echo $id; ?>" class="btn btn-danger mt-1" style="display: none;">Delete</button>
+                                    <button id="updateButton_<?php echo $id; ?>"" class="btn btn-primary mt-1" style="display: none;">Update</button>
+                                    <button id="deleteButton_ <?php echo $id; ?>" class="btn btn-danger mt-1" style="display: none; onclick = "deletedata(' . $row['id'] . ')">Delete</button>
                                 </td>
                             </tr>';
                                 $count++;
@@ -229,42 +229,33 @@ $page = 'accountlist'; //buat page aktif di sidebar
                 }
             });
         }
-        $(document).ready(function () {
-            $('.delete-account').click(function (e) {
-                e.preventDefault();
 
-                var id = $(this).data('id');
-                var username = $(this).data('username');
 
-                var confirmation = confirm("Are you sure you want to delete the account.ID : " + id + ' Username : ' + username + "?");
-                if (confirmation) {
-                    $.ajax({
-                        type: "POST",
-                        url: "deleteUser.php",
-                        data: {
-                            id: id
-                        },
-                        success: function (response) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: 'Account deleted successfully!',
-                            }).then(() => {
-                                location.reload();
-                            });
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(xhr.responseText);
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Something went wrong! Please try again later.',
-                            });
-                        }
-                    });
+
+        function deletedata(id) {
+            $.ajax({
+                url: 'deleteUser.php',
+                type: 'POST',
+                data: {
+                    id: id,
+                    action: "delete"
+                },
+                success: function (response) {
+                    if (response == 1) {
+                        alert("Data Deleted Successfully");
+                        $('#row_' + id).remove(); // Hapus baris dari tabel
+                    } else if (response == 0) {
+                        alert("Data Cannot Be Deleted");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                    alert("Something went wrong! Please try again later.");
                 }
             });
-        });
+        }
+
+
 
 
 
