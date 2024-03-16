@@ -85,11 +85,11 @@ $page = 'accountlist'; //buat page aktif di sidebar
                                             Options
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_<?php echo $id; ?>">
-                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="' . $row['id'] . '";>Update</a></li>
+                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="' . $row['id'] . '" onclick="updatedata(' . $row['id'] . ')" data-role="update">Update</a></li>
                                             <li><a class="dropdown-item delete-account" href="#" data-id="' . $row['id'] . '" ; onclick = "deletedata(' . $row['id'] . ')"> Delete</a></li>
                                         </ul>
                                     </div>
-                                    <button id="updateButton_<?php echo $id; ?>"" class="btn btn-primary mt-1" style="display: none;">Update</button>
+                                    <button id="updateButton_<?php echo $id; ?>"" class="btn btn-primary mt-1" style="display: none;" onclick = "updatedata(' . $row['id'] . ')">Update</button>
                                     <button id="deleteButton_ <?php echo $id; ?>" class="btn btn-danger mt-1" style="display: none; onclick = "deletedata(' . $row['id'] . ')">Delete</button>
                                 </td>
                             </tr>';
@@ -101,7 +101,39 @@ $page = 'accountlist'; //buat page aktif di sidebar
                 </table>
             </div>
 
-            <?php include 'modalupdate.php'; ?>
+            <div class="modal fade" id="updateModal" aria-labelledby="updateModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="updateModalLabel">Update User</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="updateForm">
+                                <div class="mb-3">
+                                    <label for="update_username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="update_username" name="update_username"
+                                        required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="new_password" class="form-label">New Password</label>
+                                    <input type="password" class="form-control" id="new_password" name="new_password"
+                                        required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirm_new_password" class="form-label">Confirm New Password</label>
+                                    <input type="password" class="form-control" id="confirm_new_password"
+                                        name="confirm_new_password" required>
+                                </div>
+                                <button type="button" class="btn btn-info" onclick="updatedata(id)"
+                                    name="updatedata">Update</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="modal fade" id="insertModal" aria-labelledby="insertModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -156,7 +188,6 @@ $page = 'accountlist'; //buat page aktif di sidebar
     <script src="../components/js/dropdown.js"></script>
     <script>
         $(document).ready(function () {
-            // Set default value for Role dropdown
             $('#role').val('admin');
         });
 
@@ -216,22 +247,6 @@ $page = 'accountlist'; //buat page aktif di sidebar
         }
 
 
-        function showUpdateButton(id) {
-            $.ajax({
-                url: 'modalupdate.php',
-                type: 'GET',
-                success: function (response) {
-                    $('#updateModalContainer').html(response);
-                    $('#updateModal').modal('show');
-
-                    var username = $('#username_' + id).text();
-                    $('#update_username').val(username);
-                }
-            });
-        }
-
-
-
         function deletedata(id) {
             $.ajax({
                 url: 'deleteUser.php',
@@ -267,12 +282,61 @@ $page = 'accountlist'; //buat page aktif di sidebar
                     alert("Something went wrong! Please try again later.");
                 }
             });
+
+
+
+            function updatedata() {
+                var username = $('#update_username').val();
+                var password = $('#new_password').val();
+                var confirm_password = $('#confirm_new_password').val();
+
+                if (username.trim() === '' || password.trim() === '' || confirm_password.trim() === '') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please fill in all fields!',
+                    });
+                    return;
+
+                    if (password !== confirm_password) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Password and Confirm Password do not match!',
+                        });
+                        return;
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: "updateUser.php",
+                        data: {
+                            username: username,
+                            password: password,
+                            id: id,
+                            action: "update"
+                        },
+                        success: function (response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Account update successfully!',
+                            }).then(() => {
+                                location.reload();
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong! Please try again later.',
+                            });
+                        }
+                    });
+                }
+            }
         }
-
-
-
-
-
 
     </script>
 

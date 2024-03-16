@@ -1,33 +1,31 @@
 <?php
 include '../../dabaseconnect/connect.php';
-
 if ($con->connect_error) {
     die ("Koneksi gagal: " . $con->connect_error);
 }
 
-if (isset ($_POST['submit'])) {
-    $id = $_GET['updateid'];
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     $id = $_POST['id'];
-    $role = $_POST['role'];
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    //$create_at = $_POST('create_at');
-
-    $sql = "UPDATE `tbl_account` SET role='$role', username='$username', password='$password' WHERE id='$id'";
+    $sql = "UPDATE `tbl_account` SET username='$username', password='$password' WHERE id='$id'";
     $result = mysqli_query($con, $sql);
 
+    // Periksa apakah kueri berhasil dieksekusi
     if ($result) {
         echo "Data berhasil diperbarui.";
     } else {
-        // Kirim pesan kesalahan jika data yang diperlukan tidak diterima dari permintaan
-        echo "Missing required data!";
+        // Kirim pesan kesalahan jika kueri gagal dieksekusi
+        echo "Gagal memperbarui data!";
     }
 
     // Tutup koneksi database
     mysqli_close($con);
 } else {
     // Kirim pesan kesalahan jika metode permintaan tidak diizinkan
-    echo "Method not allowed!";
+    echo "Metode tidak diizinkan!";
 }
 ?>
