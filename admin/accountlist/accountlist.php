@@ -240,12 +240,26 @@ $page = 'accountlist'; //buat page aktif di sidebar
                     id: id,
                     action: "delete"
                 },
+
                 success: function (response) {
                     if (response == 1) {
-                        alert("Data Deleted Successfully");
-                        $('#row_' + id).remove(); // Hapus baris dari tabel
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Account delete successfully!',
+                        }).then(() => {
+                            location.reload();
+                        });
+                        $('#row_' + id).remove();
                     } else if (response == 0) {
-                        alert("Data Cannot Be Deleted");
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Data Cannot Be Deleted',
+                        }).then(() => {
+                            location.reload();
+                        });
+
                     }
                 },
                 error: function (xhr, status, error) {
