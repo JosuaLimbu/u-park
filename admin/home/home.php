@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
+if (!isset ($_SESSION["username"]) || !isset ($_SESSION["role"]) || $_SESSION["role"] != "admin") {
     header("Location: http://localhost/upark");
 }
 $page = 'home'; //buat page aktif di sidebar
@@ -19,7 +19,7 @@ $page = 'home'; //buat page aktif di sidebar
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 </head>
 
-<body>
+<body style="background-color: #eee;">
     <?php include '../components/sidebar/sidebar.php'; ?>
     <!-- CONTENT -->
     <section id="content">

@@ -196,18 +196,16 @@ $page = 'accountlist'; //buat page aktif di sidebar
                     role: role
                 },
                 success: function (response) {
-                    // Tampilkan popup pemberitahuan jika berhasil
                     Swal.fire({
                         icon: 'success',
                         title: 'Success',
                         text: 'Account added successfully!',
                     }).then(() => {
-                        location.reload(); // Refresh halaman setelah menambahkan akun
+                        location.reload();
                     });
                 },
                 error: function (xhr, status, error) {
                     console.error(xhr.responseText);
-                    // Tampilkan pesan error jika terjadi kesalahan
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -233,12 +231,12 @@ $page = 'accountlist'; //buat page aktif di sidebar
         }
         $(document).ready(function () {
             $('.delete-account').click(function (e) {
-                e.preventDefault(); // Menghentikan perilaku default tautan
+                e.preventDefault();
 
                 var id = $(this).data('id');
                 var username = $(this).data('username');
 
-                var confirmation = confirm("Are you sure you want to delete the account '" + username + "'?");
+                var confirmation = confirm("Are you sure you want to delete the account.ID : " + id + ' Username : ' + username + "?");
                 if (confirmation) {
                     $.ajax({
                         type: "POST",
@@ -247,7 +245,6 @@ $page = 'accountlist'; //buat page aktif di sidebar
                             id: id
                         },
                         success: function (response) {
-                            // Tampilkan popup pemberitahuan jika berhasil
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Success',

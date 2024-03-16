@@ -275,6 +275,9 @@ body {
     font-size: 16px; 
     color: var(--dark); 
 }
+.navbar {
+    position: relative;
+}
 
 /* NAVBAR */
 
@@ -542,7 +545,6 @@ body {
 }
 
 .dropdown-item {
-    display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 8px 16px;
