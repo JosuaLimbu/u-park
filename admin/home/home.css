@@ -24,8 +24,8 @@ li {
 	--montserrat: 'Montserrat', sans-serif;
 	--spinnaker: 'Spinnaker', sans-serif;
 	--light: #F9F9F9;
-	--blue: #04A6B5;
-	--light-blue: #CFE8FF;
+	--ijo: #04A6B5;
+	--light-: #CFE8FF;
 	--grey: #eee;
 	--dark-grey: #AAAAAA;
 	--dark: #342E37;
@@ -81,7 +81,7 @@ body {
 	height: 56px;
 	display: flex;
 	align-items: center;
-	color: var(--blue);
+	color: var(--ijo);
 	position: sticky;
 	top: 0;
 	left: 0;
@@ -149,7 +149,7 @@ body {
 	overflow-x: hidden;
 }
 #sidebar .side-menu.top li.active a {
-	color: var(--blue);
+	color: var(--ijo);
 }
 #sidebar.hide .side-menu li a {
 	width: calc(48px - (4px * 2));
@@ -159,7 +159,7 @@ body {
 	color: var(--red);
 }
 #sidebar .side-menu.top li a:hover {
-	color: var(--blue);
+	color: var(--ijo);
 }
 #sidebar .side-menu li a .bx {
 	min-width: calc(60px  - ((4px + 6px) * 2));
@@ -246,7 +246,7 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: var(--blue);
+	background: var(--ijo);
 	color: var(--light);
 	font-size: 18px;
 	border: none;
@@ -316,14 +316,14 @@ body {
 	pointer-events: none;
 }
 #content main .head-title .left .breadcrumb li a.active {
-	color: var(--blue);
+	color: var(--ijo);
 	pointer-events: unset;
 }
 #content main .head-title .btn-download {
 	height: 36px;
 	padding: 0 16px;
 	border-radius: 36px;
-	background: var(--blue);
+	background: var(--ijo);
 	color: var(--light);
 	display: flex;
 	justify-content: center;
@@ -368,8 +368,8 @@ body {
 	color: var(--yellow);
 }
 #content main .box-info li:nth-child(3) .bx {
-	background: var(--light-blue);
-	color: var(--blue);
+	background: var(--light-);
+	color: var(--ijo);
 }
 #content main .box-info li .text h3 {
 	font-size: 24px;
@@ -454,7 +454,7 @@ body {
 	font-weight: 700;
 }
 #content main .table-data .order table tr td .status.completed {
-	background: var(--blue);
+	background: var(--ijo);
 }
 #content main .table-data .order table tr td .status.process {
 	background: var(--yellow);

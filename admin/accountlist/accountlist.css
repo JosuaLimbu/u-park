@@ -586,3 +586,59 @@ body {
 .modal-body .form-select {
     width: 100%;
 }
+
+.btn-search {
+    border-radius: 8px;
+    padding: 12px 20px;
+    border: 2px solid #AFAFAF;
+    background-color: #eee;
+    color: #666666;
+    font-family: "Montserrat Medium";
+    font-size: 14px;
+    margin-right: 20px;
+}
+
+.btn-search:focus {
+    outline: none;
+    border-color: var(--blue); 
+}
+
+.box-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.box {
+    width: 750px; 
+    height: 45px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    margin-right: 20px; 
+}
+
+.box > i {
+    font-size: 15px;
+    color: #777;
+    margin-right: 10px;
+}
+
+.box > input {
+    flex: 1;
+    height: 40px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    padding-left: 10px;
+}
+
+.btn-info {
+    height: 45px;
+    margin-right: 100px; 
+	
+}
+
+

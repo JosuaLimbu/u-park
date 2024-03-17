@@ -18,6 +18,8 @@ $page = 'accountlist'; //buat page aktif di sidebar
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="accountlist.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <style>
     :root {
@@ -30,6 +32,7 @@ $page = 'accountlist'; //buat page aktif di sidebar
 </style>
 
 <body style="background-color: #eee;">
+
     <?php include '../components/sidebar/sidebar.php'; ?>
     <!-- CONTENT -->
     <section id="content">
@@ -44,10 +47,15 @@ $page = 'accountlist'; //buat page aktif di sidebar
                 </div>
             </div>
             <div class="container tabel">
-                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#insertModal">
-                    Insert Data
-                </button>
-                <br>
+                <div class="box-container">
+                    <div class="box">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <input type="text" name="search" id="search" placeholder="Search by username">
+                    </div>
+                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#insertModal">
+                        Insert Data
+                    </button>
+                </div>
                 <br>
                 <table class="table">
                     <thead>
@@ -178,8 +186,10 @@ $page = 'accountlist'; //buat page aktif di sidebar
                 </div>
             </div>
         </main>
+
         <!-- MAIN -->
     </section>
+
     <!-- CONTENT -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -191,6 +201,13 @@ $page = 'accountlist'; //buat page aktif di sidebar
         $(document).ready(function () {
             $('#role').val('admin');
         });
+
+        $('#search').keypress(function (event) {
+            if (event.keyCode === 13) { // 13 = enter
+                searchByUsername();
+            }
+        });
+
 
         function submitForm() {
             var username = $('#username').val();
@@ -343,8 +360,29 @@ $page = 'accountlist'; //buat page aktif di sidebar
                 }
             });
         }
+        function searchByUsername() {
+            var keyword = $('#search').val().trim();
 
+            if (keyword === '') {
+                // Jika input pencarian kosong, tampilkan pesan
+                $('#searchResult').html('<tr><td colspan="5">Please enter a username to search.</td></tr>');
+                return;
+            }
 
+            // Kirim permintaan AJAX
+            $.ajax({
+                url: 'searchusername.php',
+                type: 'POST',
+                data: { keyword: keyword },
+                success: function (response) {
+                    $('#searchResult').html(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                    $('#searchResult').html('<tr><td colspan="5">An error occurred while processing your request.</td></tr>');
+                }
+            });
+        }
 
 
     </script>
