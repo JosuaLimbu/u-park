@@ -227,14 +227,23 @@ $page = 'accountlist'; //buat page aktif di sidebar
                     password: password,
                     role: role
                 },
+                dataType: "json", // Menggunakan JSON sebagai tipe data respons
                 success: function (response) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: 'Account added successfully!',
-                    }).then(() => {
-                        location.reload();
-                    });
+                    if (response.status === "success") {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Account added successfully!',
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: response.message,
+                        });
+                    }
                 },
                 error: function (xhr, status, error) {
                     console.error(xhr.responseText);

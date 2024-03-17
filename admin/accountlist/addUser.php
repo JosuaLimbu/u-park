@@ -1,13 +1,21 @@
 <?php
 session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Include file koneksi ke database
     include 'connect.php';
 
-    // Ambil nilai dari formulir
     $username = $_POST["username"];
     $password = $_POST["password"];
     $role = $_POST["role"];
+
+    $check_query = "SELECT * FROM tbl_account WHERE username = '$username'";
+    $check_result = mysqli_query($con, $check_query);
+    if (mysqli_num_rows($check_result) > 0) {
+        echo json_encode(array("status" => "error", "message" => "Username sudah ada di database!"));
+        exit;
+    }
+
+    $currentDateTime = date('j F Y');
 
     $sql_min_id = "SELECT MIN(t1.id) + 1 AS smallest_empty_id
                    FROM tbl_account AS t1
@@ -17,24 +25,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $row_min_id = mysqli_fetch_assoc($result_min_id);
     $new_id = $row_min_id['smallest_empty_id'];
 
-    // Tambahkan waktu saat ini dengan format "9 Maret 2024"
-    $currentDateTime = date('j F Y');
-
-    // Contoh query untuk menyimpan data ke dalam database, termasuk waktu saat ini
     $sql = "INSERT INTO tbl_account (id, username, password, role, create_at) VALUES ('$new_id', '$username', '$password', '$role', '$currentDateTime')";
 
-    // Eksekusi query
     if (mysqli_query($con, $sql)) {
-        // Jika query berhasil dijalankan, kirimkan respons berhasil ke client
-        echo "Data berhasil ditambahkan!";
+        echo json_encode(array("status" => "success"));
     } else {
-        // Jika query gagal dijalankan, kirimkan pesan kesalahan ke client
-        echo "Error: " . $sql . "<br>" . mysqli_error($con);
+        echo json_encode(array("status" => "error", "message" => "Terjadi kesalahan saat menambahkan data!"));
     }
-    // Tutup koneksi ke database
+
     mysqli_close($con);
 } else {
-    // Jika tidak ada data yang dikirimkan dengan metode POST, kirimkan pesan error
-    echo "Metode pengiriman data bukan POST!";
+    echo json_encode(array("status" => "error", "message" => "Metode pengiriman data bukan POST!"));
 }
-?>
