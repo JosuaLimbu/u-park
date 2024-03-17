@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 // changes password belum jadi, masih error ini

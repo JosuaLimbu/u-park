@@ -85,11 +85,11 @@ $page = 'accountlist'; //buat page aktif di sidebar
                                             Options
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_<?php echo $id; ?>">
-                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="' . $row['id'] . '" onclick="updatedata(' . $row['id'] . ')" data-role="update">Update</a></li>
+                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="' . $row['id'] . '" onclick="iddata(' . $row['id'] . ')" data-role="update">Update</a></li>
                                             <li><a class="dropdown-item delete-account" href="#" data-id="' . $row['id'] . '" ; onclick = "deletedata(' . $row['id'] . ')"> Delete</a></li>
                                         </ul>
                                     </div>
-                                    <button id="updateButton_<?php echo $id; ?>"" class="btn btn-primary mt-1" style="display: none;" onclick = "updatedata(' . $row['id'] . ')">Update</button>
+                                    <button id="updateButton_<?php echo $id; ?>"" class="btn btn-primary mt-1" style="display: none;" onclick="iddata(' . $row['id'] . ')" >Update</button>
                                     <button id="deleteButton_ <?php echo $id; ?>" class="btn btn-danger mt-1" style="display: none; onclick = "deletedata(' . $row['id'] . ')">Delete</button>
                                 </td>
                             </tr>';
@@ -113,22 +113,23 @@ $page = 'accountlist'; //buat page aktif di sidebar
                         <div class="modal-body">
                             <form id="updateForm">
                                 <div class="mb-3">
-                                    <label for="update_username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="update_username" name="update_username"
+                                    <label for="update_username" class="form-label">New Username</label>
+                                    <input type="text" class="form-control" id="newUsername" name="newUsername"
                                         required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="new_password" class="form-label">New Password</label>
-                                    <input type="password" class="form-control" id="new_password" name="new_password"
+                                    <input type="password" class="form-control" id="newPassword" name="newPassword"
                                         required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="confirm_new_password" class="form-label">Confirm New Password</label>
-                                    <input type="password" class="form-control" id="confirm_new_password"
-                                        name="confirm_new_password" required>
+                                    <input type="password" class="form-control" id="confirmPassword"
+                                        name="confirmPassword" required>
                                 </div>
-                                <button type="button" class="btn btn-info" onclick="updatedata(id)"
-                                    name="updatedata">Update</button>
+                                <button class="btn btn-info" id="result" name="submit" onclick="updatedata(this.id)"
+                                    name="submit">Update</button>
+
                             </form>
                         </div>
                     </div>
@@ -168,8 +169,8 @@ $page = 'accountlist'; //buat page aktif di sidebar
                                         <option value="Operator">Operator</option>
                                     </select>
                                 </div>
-                                <button type="button" class="btn btn-info" onclick="submitForm()"
-                                    name="submit">Insert</button>
+                                <button type="button" class="btn btn-info" onclick="submitForm()" name="submit">Insert
+                                </button>
                             </form>
                         </div>
 
@@ -282,61 +283,60 @@ $page = 'accountlist'; //buat page aktif di sidebar
                     alert("Something went wrong! Please try again later.");
                 }
             });
+        }
 
+        //ambil nilai id di atas
+        function iddata(id) {
+            document.getElementById("result").setAttribute("onclick", "updatedata(" + id + ")");//rubah id result
+        }
 
+        //baru tampung. 
+        function updatedata(id) {
+            event.preventDefault();
+            var newUsername = $("#newUsername").val();
+            var newPassword = $("#newPassword").val();
+            var confirmPassword = $("#confirmPassword").val();
 
-            function updatedata() {
-                var username = $('#update_username').val();
-                var password = $('#new_password').val();
-                var confirm_password = $('#confirm_new_password').val();
+            if (newUsername.trim() === '' || newPassword.trim() === '' || confirmPassword.trim() === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please fill in all fields!',
+                });
+                return;
+            }
 
-                if (username.trim() === '' || password.trim() === '' || confirm_password.trim() === '') {
+            if (newPassword !== confirmPassword) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'New password and confirm password do not match.',
+                });
+
+                return;
+            }
+            $.ajax({
+                url: "updateUser.php",
+                type: "POST",
+                data: {
+                    id: id,
+                    newUsername: newUsername,
+                    newPassword: newPassword
+                },
+                success: function (response) {
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Please fill in all fields!',
-                    });
-                    return;
-
-                    if (password !== confirm_password) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Password and Confirm Password do not match!',
-                        });
-                        return;
-                    }
-
-                    $.ajax({
-                        type: "POST",
-                        url: "updateUser.php",
-                        data: {
-                            username: username,
-                            password: password,
-                            id: id,
-                            action: "update"
-                        },
-                        success: function (response) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: 'Account update successfully!',
-                            }).then(() => {
-                                location.reload();
-                            });
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(xhr.responseText);
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'Something went wrong! Please try again later.',
-                            });
-                        }
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Account Updated Successfully!',
+                    }).then(() => {
+                        location.reload();
                     });
                 }
-            }
+            });
         }
+
+
+
 
     </script>
 

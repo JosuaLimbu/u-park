@@ -1,31 +1,35 @@
 <?php
-include '../../dabaseconnect/connect.php';
-if ($con->connect_error) {
-    die ("Koneksi gagal: " . $con->connect_error);
-}
+$servername = "localhost";
+$username = "root";
+$password = "limbujosua23";
+$dbname = "db_upark";
 
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die ("Connection failed: " . $conn->connect_error);
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
     $id = $_POST['id'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $newUsername = $_POST['newUsername'];
+    $newPassword = $_POST['newPassword'];
 
-    $sql = "UPDATE `tbl_account` SET username='$username', password='$password' WHERE id='$id'";
-    $result = mysqli_query($con, $sql);
+    $createDate = date("d F Y");
 
-    // Periksa apakah kueri berhasil dieksekusi
-    if ($result) {
-        echo "Data berhasil diperbarui.";
+    $sql = "SELECT * FROM tbl_account WHERE id='$id'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $sql = "UPDATE tbl_account SET username = '$newUsername', password = '$newPassword', create_at = '$createDate' WHERE id = $id";
+        if ($conn->query($sql) === TRUE) {
+            echo "Username & Password updated successfully";
+        } else {
+            echo "Error updating password: " . $conn->error;
+        }
     } else {
-        // Kirim pesan kesalahan jika kueri gagal dieksekusi
-        echo "Gagal memperbarui data!";
+        echo "Current password is incorrect";
     }
-
-    // Tutup koneksi database
-    mysqli_close($con);
-} else {
-    // Kirim pesan kesalahan jika metode permintaan tidak diizinkan
-    echo "Metode tidak diizinkan!";
 }
-?>
+
+$conn->close();
