@@ -25,10 +25,15 @@ $page = ''; //buat page aktif di sidebar
         <?php include '../components/navbar/navbar.php'; ?>
                 <!-- MAIN -->
                 <main>
+                    <!-- title -->
+                <div class="head-title">
+                <div class="left" style="font-family: 'Montserrat', sans-serif; font-weight: 600">
+                    <p>Changes Password</p>
+                </div>
+            </div>
             <!-- Main content -->
             
             <div class="container">
-                <h2>Change Password</h2>
 
                 <form action="changePas.php" method="POST">
                     <label for="old_password">Current Password:</label><br>

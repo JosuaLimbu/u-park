@@ -39,7 +39,7 @@ $page = ''; //buat page aktif di sidebar
             <!-- Main content -->
             <div class="head-title">
                 <div class="left" style="font-family: 'Montserrat', sans-serif; font-weight: 600">
-                    <p>Change Passwrod</p>
+                    <p>Changes Password</p>
                 </div>
             </div>
             <div class="container">
