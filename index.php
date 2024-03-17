@@ -3,7 +3,7 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $servername = "localhost";
     $username = "root";
-    $password = "limbujosua23";
+    $password = "";
     $dbname = "db_upark";
     $conn = new mysqli($servername, $username, $password, $dbname);
 

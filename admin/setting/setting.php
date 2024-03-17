@@ -37,9 +37,13 @@ $page = ''; //buat page aktif di sidebar
         <!-- MAIN -->
         <main>
             <!-- Main content -->
+            <div class="head-title">
+                <div class="left" style="font-family: 'Montserrat', sans-serif; font-weight: 600">
+                    <p>Changes Password</p>
+                </div>
+            </div>
             <div class="container">
-                <h2>Change Password</h2>
-
+                
                 <form action="changePas.php" method="POST">
                     <label for="old_password">Current Password:</label><br>
                     <input type="password" id="old_password" name="old_password" required><br>
@@ -49,7 +53,7 @@ $page = ''; //buat page aktif di sidebar
                     <label for="confirm_new_password">Confirm New Password:</label><br>
                     <input type="password" id="confirm_new_password" name="confirm_new_password" required><br>
                     <br>
-                    <button type="submit" class="btn btn-primary">Change Password</button>
+                    <button type="button" class="btn btn-primary" onclick="submitForm()">Change Password</button>
                 </form>
             </div>
         </main>
@@ -60,6 +64,38 @@ $page = ''; //buat page aktif di sidebar
     <script src="../components/js/script.js"></script>
     <script src="../components/js/datetime.js"></script>
     <script src="../components/js/dropdown.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+function submitForm() {
+    // Code untuk mengirim form dengan AJAX
+    $.ajax({
+        type: 'POST',
+        url: 'changePas.php', // Ganti dengan URL skrip PHP Anda
+        data: $('form').serialize(),
+        success: function(response) {
+            // Jika berhasil, tampilkan popup dengan SweetAlert
+            Swal.fire({
+                icon: 'success',
+                title: 'Password berhasil diubah!',
+                text: response // Response dari skrip PHP (misalnya: "Password berhasil diubah!")
+            });
+        },
+        error: function(error) {
+            // Jika terjadi kesalahan, tampilkan pesan error
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Terjadi kesalahan saat mengubah password!'
+            });
+        }
+    });
+}
+</script>
+
 </body>
 
 </html>

@@ -55,7 +55,7 @@ $page = 'accountlist'; //buat page aktif di sidebar
                             <th scope="col">No</th>
                             <th scope="col">Username</th>
                             <th scope="col">Role</th>
-                            <th scope="col">Create At</th>
+                            <th scope="col">Date time</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>

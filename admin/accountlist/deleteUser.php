@@ -1,5 +1,5 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "limbujosua23", "db_upark");
+$conn = mysqli_connect("localhost", "root", "", "db_park");
 
 if (isset ($_POST["action"])) {
     if ($_POST["action"] == "delete") {
