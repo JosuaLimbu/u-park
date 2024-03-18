@@ -1,5 +1,5 @@
 <?php
-$con = new mysqli('localhost', 'root', 'limbujosua23', 'db_upark');
+$con = new mysqli('localhost', 'root', '', 'db_upark');
 
 // Check connection
 if ($con->connect_error) {

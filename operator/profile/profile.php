@@ -119,7 +119,7 @@ $role = $_SESSION["role"]; // Misalnya, role disimpan di sesi
 <div class="profile">
     <div class="profile-info" style="display: flex;">
         <!-- Image Profile -->
-        <img src="Profile.jpg" alt="" style="margin-right: 20px;" width="" height="">
+        <img src="profile.png" alt="" style="margin-right: 20px;" width="300" height="300">
         <div style="width: 40%; height: 30%; transform: rotate(-90deg); transform-origin: 0 1; border: 5px rgba(0, 0, 0, 0.40) solid"></div>
         <!-- User Details -->
         <div class="user-details" style="display: flex; flex-direction: column;">
@@ -141,7 +141,7 @@ $role = $_SESSION["role"]; // Misalnya, role disimpan di sesi
     </section>
     <!-- CONTENT -->
 
-    <script src="../components/js/script.js"></script>
+    <script src="../components/js/script.js"></script>  
     <script src="../components/js/datetime.js"></script>
     <script src="../components/js/dropdown.js"></script>
 </body>
