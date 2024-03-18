@@ -45,6 +45,9 @@ $page = ''; //buat page aktif di sidebar
                 </div>
                 
             </div>
+            <br>
+            <br>
+            <br>
             <?php
 
 if (!isset($_SESSION["username"])) {
@@ -128,23 +131,25 @@ $username = $_SESSION["username"];
 $role = $_SESSION["role"]; // Misalnya, role disimpan di sesi
 ?>
 
-    <div class="container">
-        <div class="profile">
-            <div class="profile-info">
-                <!--panggile image profile-->
-                <img src="Profile.jpg" alt="">
-                <!-- Tampilkan informasi pengguna -->
-                <h2>Username : <?php echo $username; ?></h2>
-                <h2>Role: <?php echo $role; ?></h2>
-                <h2><?php echo "Password: " . getPasswordFromDatabase($username); ?></h2>
-                <h2><?php echo "Create Date: " . getCreateDate($username); ?></h2>
-                
-            </div>
-            <div class="profile-actions">
-            
-                
-            </div>
+<div class="profile">
+    <div class="profile-info" style="display: flex;">
+        <!-- Image Profile -->
+        <img src="Profile.jpg" alt="" style="margin-right: 20px;" width="" height="">
+        <div style="width: 40%; height: 30%; transform: rotate(-90deg); transform-origin: 0 1; border: 5px rgba(0, 0, 0, 0.40) solid"></div>
+        <!-- User Details -->
+        <div class="user-details" style="display: flex; flex-direction: column;">
+            <h2 style="margin: 5px 0;">Username : <?php echo $username; ?></h2>
+            <div style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid"></div>
+            <h2 style="margin: 5px 0;">Role: <?php echo $role; ?></h2>
+            <div style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid"></div>
+            <h2 style="margin: 5px 0;">Password: <?php echo getPasswordFromDatabase($username); ?></h2>
+            <div style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid"></div>
+            <h2 style="margin: 5px 0;">Create Date: <?php echo getCreateDate($username); ?></h2>
+            <div style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid"></div>
         </div>
+    </div>
+</div>
+
     </div>
         </main>
         <!-- MAIN -->

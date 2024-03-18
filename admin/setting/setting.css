@@ -556,3 +556,16 @@ body {
 .dropdown-item:hover {
     background-color: #f2f2f2;
 }
+
+.profile {
+    display: flex; /* Menggunakan Flexbox untuk mengatur tata letak */
+    justify-content: flex-end; /* Mengatur agar konten berada di sebelah kanan */
+}
+
+.profile-info {
+    width: 300px; /* Atur lebar konten sesuai kebutuhan */
+    margin-left: auto; /* Geser konten ke sebelah kanan */
+    padding: 20px; /* Tambahkan padding agar konten terlihat lebih baik */
+    border: 1px solid #ccc; /* Tambahkan border untuk tampilan yang lebih jelas */
+    background-color: #f9f9f9; /* Tambahkan latar belakang untuk memisahkan konten dari latar belakang halaman */
+}

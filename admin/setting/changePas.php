@@ -17,13 +17,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Jika username dan password lama cocok, update password baru
         $updateQuery = "UPDATE tbl_account SET password='$newPassword' WHERE username='$username'";
         if (mysqli_query($con, $updateQuery)) {
-            //echo "Password berhasil diubah!";
+            echo "PasswordChangedSuccessfully";
         } else {
             echo "Error: " . $updateQuery . "<br>" . mysqli_error($con);
         }
     } else {
         // Jika username dan password lama tidak cocok, kirimkan pesan kesalahan
-        echo "Password lama salah!";
+        echo "OldPasswordIncorrect";
     }
 
     mysqli_close($con);
