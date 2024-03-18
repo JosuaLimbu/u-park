@@ -43,7 +43,7 @@ $page = ''; //buat page aktif di sidebar
                 </div>
             </div>
             <div class="container">
-                
+
                 <form action="changePas.php" method="POST">
                     <label for="old_password">Current Password:</label><br>
                     <input type="password" id="old_password" name="old_password" required><br>
@@ -66,33 +66,33 @@ $page = ''; //buat page aktif di sidebar
     <script src="../components/js/dropdown.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-<script>
-function submitForm() {
-    var oldPassword = $('#old_password').val().trim();
-    var newPassword = $('#new_password').val().trim();
-    var confirmNewPassword = $('#confirm_new_password').val().trim();
+    <script>
+        function submitForm() {
+            var oldPassword = $('#old_password').val().trim();
+            var newPassword = $('#new_password').val().trim();
+            var confirmNewPassword = $('#confirm_new_password').val().trim();
 
-    // Memeriksa apakah ada field yang kosong
-    if (oldPassword === '' || newPassword === '' || confirmNewPassword === '') {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Please fill in all fields!',
-        });
-        return;
-    }
+            // Memeriksa apakah ada field yang kosong
+            if (oldPassword === '' || newPassword === '' || confirmNewPassword === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please fill in all fields!',
+                });
+                return;
+            }
 
-    // Memeriksa apakah password baru dan konfirmasi password cocok
-    if (newPassword !== confirmNewPassword) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'New Password and Confirm New Password do not match!',
-        });
-        return;
-    }
+            // Memeriksa apakah password baru dan konfirmasi password cocok
+            if (newPassword !== confirmNewPassword) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'New Password and Confirm New Password do not match!',
+                });
+                return;
+            }
 
     // Mengirim data form dengan AJAX
     $.ajax({
@@ -104,19 +104,11 @@ function submitForm() {
             confirm_new_password: confirmNewPassword
         },
         success: function(response) {
-            if (response === "PasswordChangedSuccessfully") {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: response // Response dari skrip PHP (misalnya: "Password berhasil diubah!")
-                });
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: response,
-                });
-            }
+            Swal.fire({
+                icon: 'success',
+                title: 'Password successfully changed!',
+                text: response // Response dari skrip PHP (misalnya: "Password berhasil diubah!")
+            });
         },
         error: function(xhr, status, error) {
             console.error(xhr.responseText);
@@ -129,8 +121,7 @@ function submitForm() {
     });
 }
 
-
-</script>
+    </script>
 
 </body>
 

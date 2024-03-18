@@ -17,7 +17,7 @@ $page = ''; //buat page aktif di sidebar
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="profile.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    
+
 </head>
 <style>
     :root {
@@ -29,7 +29,7 @@ $page = ''; //buat page aktif di sidebar
     }
 </style>
 
-<body>
+<body style="background-color: #eee;">
     <?php include '../components/sidebar/sidebar.php'; ?>
     <!-- CONTENT -->
     <section id="content">
@@ -41,115 +41,116 @@ $page = ''; //buat page aktif di sidebar
             <div class="head-title">
                 <div class="left" style="font-family: 'Montserrat', sans-serif; font-weight: 600">
                     <p>Profile</p>
-                    
+
                 </div>
-                
+
             </div>
             <br>
             <br>
             <br>
             <?php
 
-if (!isset($_SESSION["username"])) {
-   
-    header("Location: login.php");
-    exit; 
-}
+            if (!isset ($_SESSION["username"])) {
 
-function connectToDatabase() {
-    
-    $servername = "localhost";
-    $username = "root"; 
-    $password = ""; 
-    $dbname = "db_upark";
+                header("Location: login.php");
+                exit;
+            }
 
-    // Buat koneksi
-    $conn = new mysqli($servername, $username, $password, $dbname);
+            function connectToDatabase()
+            {
 
-    // Periksa koneksi
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+                $servername = "localhost";
+                $username = "root";
+                $password = "limbujosua23";
+                $dbname = "db_upark";
 
-    return $conn;
-}
+                // Buat koneksi
+                $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Fungsi untuk mendapatkan kata sandi pengguna dari database
-function getPasswordFromDatabase($username) {
-    // Buat koneksi ke database
-    $conn = connectToDatabase();
+                // Periksa koneksi
+                if ($conn->connect_error) {
+                    die ("Connection failed: " . $conn->connect_error);
+                }
 
-    // Lakukan query ke database
-    $sql = "SELECT password FROM tbl_account WHERE username = '$username'";
-    $result = $conn->query($sql);
+                return $conn;
+            }
 
-   
-    if ($result->num_rows > 0) {
-        // Ambil baris pertama hasil query
-        $row = $result->fetch_assoc();
-        // Ambil kolom password
-        $password = $row["password"];
-    } else {
-        // Jika tidak ada hasil, set password ke null
-        $password = null;
-    }
+            // Fungsi untuk mendapatkan kata sandi pengguna dari database
+            function getPasswordFromDatabase($username)
+            {
+                // Buat koneksi ke database
+                $conn = connectToDatabase();
 
-    // Tutup koneksi database
-    $conn->close();
+                // Lakukan query ke database
+                $sql = "SELECT password FROM tbl_account WHERE username = '$username'";
+                $result = $conn->query($sql);
 
-    return $password;
-}
 
-// Fungsi untuk mendapatkan tanggal pembuatan pengguna
-function getCreateDate($username) {
-    // Buat koneksi ke database
-    $conn = connectToDatabase();
+                if ($result->num_rows > 0) {
+                    // Ambil baris pertama hasil query
+                    $row = $result->fetch_assoc();
+                    // Ambil kolom password
+                    $password = $row["password"];
+                } else {
+                    // Jika tidak ada hasil, set password ke null
+                    $password = null;
+                }
 
-    // Lakukan query ke database
-    $sql = "SELECT create_at FROM tbl_account WHERE username = '$username'";
-    $result = $conn->query($sql);
+                // Tutup koneksi database
+                $conn->close();
 
-    // Periksa hasil query
-    if ($result->num_rows > 0) {
-        // Ambil baris pertama hasil query
-        $row = $result->fetch_assoc();
-        // Ambil kolom create_date
-        $createDate = $row["create_at"];
-    } else {
-        // Jika tidak ada hasil, set create_date ke null
-        $createDate = null;
-    }
+                return $password;
+            }
 
-    // Tutup koneksi database
-    $conn->close();
+            // Fungsi untuk mendapatkan tanggal pembuatan pengguna
+            function getCreateDate($username)
+            {
+                // Buat koneksi ke database
+                $conn = connectToDatabase();
 
-    return $createDate;
-}
+                // Lakukan query ke database
+                $sql = "SELECT create_at FROM tbl_account WHERE username = '$username'";
+                $result = $conn->query($sql);
 
-// Ambil informasi pengguna dari sesi
-$username = $_SESSION["username"];
-$role = $_SESSION["role"]; // Misalnya, role disimpan di sesi
-?>
+                // Periksa hasil query
+                if ($result->num_rows > 0) {
+                    // Ambil baris pertama hasil query
+                    $row = $result->fetch_assoc();
+                    // Ambil kolom create_date
+                    $createDate = $row["create_at"];
+                } else {
+                    // Jika tidak ada hasil, set create_date ke null
+                    $createDate = null;
+                }
 
-<div class="profile">
-    <div class="profile-info" style="display: flex;">
-        <!-- Image Profile -->
-        <img src="Profile.jpg" alt="" style="margin-right: 20px;" width="" height="">
-        <div style="width: 40%; height: 30%; transform: rotate(-90deg); transform-origin: 0 1; border: 5px rgba(0, 0, 0, 0.40) solid"></div>
-        <!-- User Details -->
-        <div class="user-details" style="display: flex; flex-direction: column;">
-            <h2 style="margin: 5px 0;">Username : <?php echo $username; ?></h2>
-            <div style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid"></div>
-            <h2 style="margin: 5px 0;">Role: <?php echo $role; ?></h2>
-            <div style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid"></div>
-            <h2 style="margin: 5px 0;">Password: <?php echo getPasswordFromDatabase($username); ?></h2>
-            <div style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid"></div>
-            <h2 style="margin: 5px 0;">Create Date: <?php echo getCreateDate($username); ?></h2>
-            <div style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid"></div>
+                // Tutup koneksi database
+                $conn->close();
+
+                return $createDate;
+            }
+
+            // Ambil informasi pengguna dari sesi
+            $username = $_SESSION["username"];
+            $role = $_SESSION["role"]; // Misalnya, role disimpan di sesi
+            ?>
+
+    <div class="container">
+        <div class="profile">
+            <div class="profile-info">
+                <!--panggile image profile-->
+                <img src="Profile.jpg" alt="">
+                <!-- Tampilkan informasi pengguna -->
+                <h2>Username : <?php echo $username; ?></h2>
+                <h2>Role: <?php echo $role; ?></h2>
+                <h2><?php echo "Password: " . getPasswordFromDatabase($username); ?></h2>
+                <h2><?php echo "Create Date: " . getCreateDate($username); ?></h2>
+                
+            </div>
+            <div class="profile-actions">
+            
+                
+            </div>
         </div>
-    </div>
-</div>
-
     </div>
         </main>
         <!-- MAIN -->
