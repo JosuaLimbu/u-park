@@ -2,7 +2,7 @@
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    include '../../dabaseconnect/connect.php';
+    include '../../databaseconnect/connect.php';
 
     // Ambil nilai dari sesi untuk mendapatkan username pengguna yang sedang masuk
     $username = $_SESSION["username"];

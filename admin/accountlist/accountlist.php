@@ -46,42 +46,43 @@ $page = 'accountlist'; //buat page aktif di sidebar
                     <p>Account List</p>
                 </div>
             </div>
-            <div class="container tabel">
-                <div class="box-container">
-                    <div class="box">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                        <input type="text" name="search" id="search" placeholder="Search by username">
-                    </div>
-                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#insertModal">
-                        Insert Data
-                    </button>
+            <div class="box-top">
+                <div class="box">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <input type="text" name="search" id="search" placeholder="Search by username">
                 </div>
-                <br>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">No</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Role</th>
-                            <th scope="col">Create At</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        include 'connect.php';
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#insertModal">
+                    Insert Data
+                </button>
+            </div>
 
-                        $sql = "SELECT * FROM `tbl_account`";
-                        $result = mysqli_query($con, $sql);
-                        if ($result) {
-                            $count = 1;
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                $id = $row['id'];
-                                $role = $row['role'];
-                                $name = $row['username'];
-                                $create_date = $row['create_at'];
+            <div class="box-container">
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Create At</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="searchResult">
+                    <?php
+                    include 'connect.php';
 
-                                echo '
+                    $sql = "SELECT * FROM `tbl_account`";
+                    $result = mysqli_query($con, $sql);
+                    if ($result) {
+                        $count = 1;
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $id = $row['id'];
+                            $role = $row['role'];
+                            $name = $row['username'];
+                            $create_date = $row['create_at'];
+
+                            echo '
                             <tr id = ' . $row['id'] . '>
                                 <td>' . $count . '</td>
                                 <td>' . $name . '</td>
@@ -101,12 +102,12 @@ $page = 'accountlist'; //buat page aktif di sidebar
                                     <button id="deleteButton_ <?php echo $id; ?>" class="btn btn-danger mt-1" style="display: none; onclick = "deletedata(' . $row['id'] . ')">Delete</button>
                                 </td>
                             </tr>';
-                                $count++;
-                            }
+                            $count++;
                         }
-                        ?>
-                    </tbody>
-                </table>
+                    }
+                    ?>
+                </tbody>
+            </table>
             </div>
 
             <div class="modal fade" id="updateModal" aria-labelledby="updateModalLabel" aria-hidden="true">
@@ -201,13 +202,16 @@ $page = 'accountlist'; //buat page aktif di sidebar
         $(document).ready(function () {
             $('#role').val('admin');
         });
-
-        $('#search').keypress(function (event) {
-            if (event.keyCode === 13) { // 13 = enter
+        $(document).ready(function () {
+            $('#search').on('keyup', function () {
                 searchByUsername();
-            }
+            });
+            $('#search').on('input', function () {
+                if ($(this).val().trim() === '') {
+                    location.reload();
+                }
+            });
         });
-
 
         function submitForm() {
             var username = $('#username').val();
@@ -364,12 +368,12 @@ $page = 'accountlist'; //buat page aktif di sidebar
             var keyword = $('#search').val().trim();
 
             if (keyword === '') {
-                // Jika input pencarian kosong, tampilkan pesan
-                $('#searchResult').html('<tr><td colspan="5">Please enter a username to search.</td></tr>');
+                $('.box-container').show();
                 return;
             }
 
-            // Kirim permintaan AJAX
+            $('.box-container').hide();
+
             $.ajax({
                 url: 'searchusername.php',
                 type: 'POST',
