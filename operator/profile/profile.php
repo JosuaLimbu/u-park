@@ -31,46 +31,107 @@ $page = ''; //buat page aktif di sidebar
                 </div>
             </div>
 
-            <ul class="box-info">
-                <li>
-                    <span class="text">
-                        <h3>Welcome</h3>
-                        <p><?php echo $_SESSION["username"]; ?></p>
-                    </span>
-                </li>
-                <li>
-                    <i class='bx bx-car' ></i>
-                    <span class="text">
-                        <h3>100 Vehicle</h3>
-                        <p>Today</p>
-                    </span>
-                </li>
-                <li>
-                    <i class='bx bxs-time-five' ></i>
-                    <span class="text">
-                        <h3 id="current-time"></h3> 
-                        <p id="current-date"></p>
-                    </span>
-                </li>
-            </ul>
+            <?php
 
-            <div class="table-data">
-                <div class="order">
-                    <div class="head">
-                        <h3>About U-Park</h3>
-                    </div>
-                    <span class="text">
-                        <p>U-Park is a parking management system that uses Number Plate Recognition (NPR) 
-                            technology to manage parking at Klabat University. The U-Park application 
-                            utilizes NPR technology to detect and record vehicle license plates as they 
-                            enter the campus parking area. With U-Park, parking managers can monitor and 
-                            manage parking capacity, and optimize the use of parking spaces. In addition, 
-                            admins and operators can easily register vehicles, access information about the 
-                            availability of parking spaces. Thus, U-Park provides an effective and efficient 
-                            solution in managing the parking system on the Klabat University campus.</p>
-                    </span>
-                </div>
+if (!isset($_SESSION["username"])) {
+   
+    header("Location: login.php");
+    exit; 
+}
+
+function connectToDatabase() {
+    
+    $servername = "localhost";
+    $username = "root"; 
+    $password = ""; 
+    $dbname = "db_upark";
+
+    // Buat koneksi
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Periksa koneksi
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    return $conn;
+}
+
+// Fungsi untuk mendapatkan kata sandi pengguna dari database
+function getPasswordFromDatabase($username) {
+    // Buat koneksi ke database
+    $conn = connectToDatabase();
+
+    // Lakukan query ke database
+    $sql = "SELECT password FROM tbl_account WHERE username = '$username'";
+    $result = $conn->query($sql);
+
+   
+    if ($result->num_rows > 0) {
+        // Ambil baris pertama hasil query
+        $row = $result->fetch_assoc();
+        // Ambil kolom password
+        $password = $row["password"];
+    } else {
+        // Jika tidak ada hasil, set password ke null
+        $password = null;
+    }
+
+    // Tutup koneksi database
+    $conn->close();
+
+    return $password;
+}
+
+// Fungsi untuk mendapatkan tanggal pembuatan pengguna
+function getCreateDate($username) {
+    // Buat koneksi ke database
+    $conn = connectToDatabase();
+
+    // Lakukan query ke database
+    $sql = "SELECT create_at FROM tbl_account WHERE username = '$username'";
+    $result = $conn->query($sql);
+
+    // Periksa hasil query
+    if ($result->num_rows > 0) {
+        // Ambil baris pertama hasil query
+        $row = $result->fetch_assoc();
+        // Ambil kolom create_date
+        $createDate = $row["create_at"];
+    } else {
+        // Jika tidak ada hasil, set create_date ke null
+        $createDate = null;
+    }
+
+    // Tutup koneksi database
+    $conn->close();
+
+    return $createDate;
+}
+
+// Ambil informasi pengguna dari sesi
+$username = $_SESSION["username"];
+$role = $_SESSION["role"]; // Misalnya, role disimpan di sesi
+?>
+
+    <div class="container">
+        <div class="profile">
+            <div class="profile-info">
+                <!--panggile image profile-->
+                <img src="Profile.jpg" alt="">
+                <!-- Tampilkan informasi pengguna -->
+                <h2>Username : <?php echo $username; ?></h2>
+                <h2>Role: <?php echo $role; ?></h2>
+                <h2><?php echo "Password: " . getPasswordFromDatabase($username); ?></h2>
+                <h2><?php echo "Create Date: " . getCreateDate($username); ?></h2>
+                
             </div>
+            <div class="profile-actions">
+            
+                
+            </div>
+        </div>
+    </div>
         </main>
         <!-- MAIN -->
     </section>
