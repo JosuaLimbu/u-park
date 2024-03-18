@@ -70,30 +70,57 @@ $page = ''; //buat page aktif di sidebar
 
 <script>
 function submitForm() {
-    // Code untuk mengirim form dengan AJAX
+    var oldPassword = $('#old_password').val().trim();
+    var newPassword = $('#new_password').val().trim();
+    var confirmNewPassword = $('#confirm_new_password').val().trim();
+
+    // Memeriksa apakah ada field yang kosong
+    if (oldPassword === '' || newPassword === '' || confirmNewPassword === '') {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please fill in all fields!',
+        });
+        return;
+    }
+
+    // Memeriksa apakah password baru dan konfirmasi password cocok
+    if (newPassword !== confirmNewPassword) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'New Password and Confirm New Password do not match!',
+        });
+        return;
+    }
+
+    // Mengirim data form dengan AJAX
     $.ajax({
         type: 'POST',
-        url: 'changePas.php', // Ganti dengan URL skrip PHP Anda
-        data: $('form').serialize(),
+        url: 'changePas.php', // Sesuaikan dengan URL skrip PHP Anda
+        data: {
+            old_password: oldPassword,
+            new_password: newPassword,
+            confirm_new_password: confirmNewPassword
+        },
         success: function(response) {
-            // Jika berhasil, tampilkan popup dengan SweetAlert
             Swal.fire({
                 icon: 'success',
-                title: 'Password berhasil diubah!',
+                title: 'Password successfully changed!',
                 text: response // Response dari skrip PHP (misalnya: "Password berhasil diubah!")
             });
         },
-        error: function(error) {
-            // Jika terjadi kesalahan, tampilkan pesan error
-            console.error('Error:', error);
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Terjadi kesalahan saat mengubah password!'
+                text: 'An error occurred while changing password! Please try again later.',
             });
         }
     });
 }
+
 </script>
 
 </body>
