@@ -184,7 +184,7 @@ $page = 'plateregist'; //buat page aktif di sidebar
         });
         $(document).ready(function () {
             $('#search').on('keyup', function () {
-                searchByUsername();
+                searchByName();
             });
             $('#search').on('input', function () {
                 if ($(this).val().trim() === '') {
@@ -265,7 +265,7 @@ $page = 'plateregist'; //buat page aktif di sidebar
 
         function deletedata(id) {
             $.ajax({
-                url: 'deleteUser.php',
+                url: 'deletenumberplate.php',
                 type: 'POST',
                 data: {
                     id: id,
@@ -338,7 +338,8 @@ $page = 'plateregist'; //buat page aktif di sidebar
                 }
             });
         }
-        function searchByUsername() {
+
+        function searchByName() {
             var keyword = $('#search').val().trim();
 
             if (keyword === '') {
@@ -349,7 +350,7 @@ $page = 'plateregist'; //buat page aktif di sidebar
             $('.box-container').hide();
 
             $.ajax({
-                url: 'searchusername.php',
+                url: 'searchname.php',
                 type: 'POST',
                 data: { keyword: keyword },
                 success: function (response) {

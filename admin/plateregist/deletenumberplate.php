@@ -12,10 +12,11 @@ function delete()
     global $conn;
 
     $id = $_POST["id"];
-    $query = "DELETE FROM tbl_account WHERE id = $id";
+    $query = "DELETE FROM tbl_plateregist WHERE id = $id"; // Perbarui sesuai dengan nama tabel yang benar
     if (mysqli_query($conn, $query)) {
         echo 1;
     } else {
         echo "ada yang salah";
     }
 }
+?>
