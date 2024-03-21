@@ -12,23 +12,22 @@ if ($conn->connect_error) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id'];
-    $newUsername = $_POST['newUsername'];
-    $newPassword = $_POST['newPassword'];
+    $newname = $_POST['newname'];
+    $newplatenumber = $_POST['newplatenumber'];
 
-    $createDate = date("d F Y");
 
-    $sql = "SELECT * FROM tbl_account WHERE id='$id'";
+    $sql = "SELECT * FROM tbl_plateregist WHERE id='$id'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        $sql = "UPDATE tbl_account SET username = '$newUsername', password = '$newPassword', create_at = '$createDate' WHERE id = $id";
+        $sql = "UPDATE tbl_plateregist SET name = '$newname', plate_number = '$newplatenumber'WHERE id = $id";
         if ($conn->query($sql) === TRUE) {
-            echo "Username & Password updated successfully";
+            echo "Name and plate number updated successfully";
         } else {
-            echo "Error updating password: " . $conn->error;
+            echo "Error updating plate number: " . $conn->error;
         }
     } else {
-        echo "Current password is incorrect";
+        echo "Current plate number is incorrect";
     }
 }
 

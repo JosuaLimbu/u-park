@@ -61,7 +61,7 @@ $page = ''; //buat page aktif di sidebar
 
                 $servername = "localhost";
                 $username = "root";
-                $password = "";
+                $password = "limbujosua23";
                 $dbname = "db_upark";
 
                 // Buat koneksi
@@ -134,25 +134,43 @@ $page = ''; //buat page aktif di sidebar
             $role = $_SESSION["role"]; // Misalnya, role disimpan di sesi
             ?>
 
-<div class="profile">
-    <div class="profile-info" style="display: flex;">
-        <!-- Image Profile -->
-        <img src="Profile.png" alt="" style="margin-right: 20px;" width="300" height="300">
-        <div style="width: 40%; height: 30%; transform: rotate(-90deg); transform-origin: 0 1; border: 5px rgba(0, 0, 0, 0.40) solid"></div>
-        <!-- User Details -->
-        <div class="user-details" style="display: flex; flex-direction: column;">
-            <h2 style="margin: 5px 0;">Username : <?php echo $username; ?></h2>
-            <div style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid"></div>
-            <h2 style="margin: 5px 0;">Role: <?php echo $role; ?></h2>
-            <div style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid"></div>
-            <h2 style="margin: 5px 0;">Password: <?php echo getPasswordFromDatabase($username); ?></h2>
-            <div style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid"></div>
-            <h2 style="margin: 5px 0;">Create Date: <?php echo getCreateDate($username); ?></h2>
-            <div style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid"></div>
-        </div>
-    </div>
-</div>
-    </div>
+            <div class="profile">
+                <div class="profile-info" style="display: flex;">
+                    <!-- Image Profile -->
+                    <img src="Profile.png" alt="" style="margin-right: 20px;" width="300" height="300">
+                    <div
+                        style="width: 40%; height: 30%; transform: rotate(-90deg); transform-origin: 0 1; border: 5px rgba(0, 0, 0, 0.40) solid">
+                    </div>
+                    <!-- User Details -->
+                    <div class="user-details" style="display: flex; flex-direction: column;">
+                        <h2 style="margin: 5px 0;">Username :
+                            <?php echo $username; ?>
+                        </h2>
+                        <div
+                            style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid">
+                        </div>
+                        <h2 style="margin: 5px 0;">Role:
+                            <?php echo $role; ?>
+                        </h2>
+                        <div
+                            style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid">
+                        </div>
+                        <h2 style="margin: 5px 0;">Password:
+                            <?php echo getPasswordFromDatabase($username); ?>
+                        </h2>
+                        <div
+                            style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid">
+                        </div>
+                        <h2 style="margin: 5px 0;">Create Date:
+                            <?php echo getCreateDate($username); ?>
+                        </h2>
+                        <div
+                            style="width: 100%; height: 5px; transform: rotate(-0deg); transform-origin: 0 1; border: 2px rgba(0, 0, 0, 0.40) solid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
         </main>
         <!-- MAIN -->
     </section>

@@ -111,7 +111,7 @@ $page = 'plateregist'; //buat page aktif di sidebar
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="updateModalLabel">Update User</h5>
+                            <h5 class="modal-title" id="updateModalLabel">Update Plate Regist</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -119,19 +119,13 @@ $page = 'plateregist'; //buat page aktif di sidebar
                         <div class="modal-body">
                             <form id="updateForm">
                                 <div class="mb-3">
-                                    <label for="update_username" class="form-label">New Username</label>
-                                    <input type="text" class="form-control" id="newUsername" name="newUsername"
-                                        required>
+                                    <label for="update_name" class="form-label">New Name</label>
+                                    <input type="text" class="form-control" id="newname" name="newname" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="new_password" class="form-label">New Password</label>
-                                    <input type="password" class="form-control" id="newPassword" name="newPassword"
+                                    <label for="update_platenumber" class="form-label">New Plate Number</label>
+                                    <input type="text" class="form-control" id="newplatenumber" name="newplatenumber"
                                         required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="confirm_new_password" class="form-label">Confirm New Password</label>
-                                    <input type="password" class="form-control" id="confirmPassword"
-                                        name="confirmPassword" required>
                                 </div>
                                 <button class="btn btn-info" id="result" name="submit" onclick="updatedata(this.id)"
                                     name="submit">Update</button>
@@ -296,11 +290,10 @@ $page = 'plateregist'; //buat page aktif di sidebar
         //baru tampung. 
         function updatedata(id) {
             event.preventDefault();
-            var newUsername = $("#newUsername").val();
-            var newPassword = $("#newPassword").val();
-            var confirmPassword = $("#confirmPassword").val();
+            var newname = $("#newname").val();
+            var newplatenumber = $("#newplatenumber").val();
 
-            if (newUsername.trim() === '' || newPassword.trim() === '' || confirmPassword.trim() === '') {
+            if (newname.trim() === '' || newplatenumber.trim() === '') {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -308,29 +301,19 @@ $page = 'plateregist'; //buat page aktif di sidebar
                 });
                 return;
             }
-
-            if (newPassword !== confirmPassword) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'New password and confirm password do not match.',
-                });
-
-                return;
-            }
             $.ajax({
-                url: "updateUser.php",
+                url: "updatenumberplate.php",
                 type: "POST",
                 data: {
                     id: id,
-                    newUsername: newUsername,
-                    newPassword: newPassword
+                    newname: newname,
+                    newplatenumber: newplatenumber
                 },
                 success: function (response) {
                     Swal.fire({
                         icon: 'success',
                         title: 'Success',
-                        text: 'Account Updated Successfully!',
+                        text: 'Data Updated Successfully!',
                     }).then(() => {
                         location.reload();
                     });
