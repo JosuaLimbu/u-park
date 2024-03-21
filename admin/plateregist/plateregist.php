@@ -20,6 +20,7 @@ $page = 'plateregist'; //buat page aktif di sidebar
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css"
         href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="jam.css">
 </head>
 <style>
     :root {
@@ -175,6 +176,9 @@ $page = 'plateregist'; //buat page aktif di sidebar
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
+    <script src="script.js"></script>
     <script src="../components/js/script.js"></script>
     <script src="../components/js/datetime.js"></script>
     <script src="../components/js/dropdown.js"></script>
