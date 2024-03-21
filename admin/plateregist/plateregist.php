@@ -193,6 +193,24 @@ $page = 'plateregist'; //buat page aktif di sidebar
             });
         });
 
+        //Auto huruf besar input number plate
+        $(document).ready(function () {
+            $('#plate_number').on('input', function () {
+                var plateNumber = $(this).val();
+                plateNumber = plateNumber.replace(/\s/g, '').toUpperCase();
+                $(this).val(plateNumber);
+            });
+        });
+
+        //Auto huruf besar update number plate
+        $(document).ready(function () {
+            $('#newplatenumber').on('input', function () {
+                var newPlateNumber = $(this).val();
+                newPlateNumber = newPlateNumber.replace(/\s/g, '').toUpperCase();
+                $(this).val(newPlateNumber);
+            });
+        });
+
         function submitForm() {
             var name = $('#name').val();
             var plate_number = $('#plate_number').val();
