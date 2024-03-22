@@ -59,17 +59,18 @@ $page = 'vehicleentry'; //buat page aktif di sidebar
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">No</th>
                         <th scope="col">Name</th>
                         <th scope="col">Plate Number</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Entry Time</th>
+                        <th scope="col">Exit Time</th>
                     </tr>
                 </thead>
                 <tbody id="searchResult">
                     <?php
                     include 'connect.php';
 
-                    $sql = "SELECT * FROM `tbl_plateregist`";
+                    $sql = "SELECT * FROM `tbl_vehicleentry`";
                     $result = mysqli_query($con, $sql);
                     if ($result) {
                         $count = 1;
@@ -77,25 +78,17 @@ $page = 'vehicleentry'; //buat page aktif di sidebar
                             $id = $row['id'];
                             $name = $row['name'];
                             $plate_number = $row['plate_number'];
+                            $date = $row['date'];
+                            $entry_time = $row['entry_time'];
+                            $exit_time = $row['exit_time'];
 
                             echo '
                             <tr id = ' . $row['id'] . '>
-                                <td>' . $id . '</td>
                                 <td>' . $name . '</td>
                                 <td>' . $plate_number . '</td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton_<?php echo $id; ?>" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Options
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_<?php echo $id; ?>">
-                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="' . $row['id'] . '" onclick="iddata(' . $row['id'] . ')" data-role="update">Update</a></li>
-                                            <li><a class="dropdown-item delete-account" href="#" data-id="' . $row['id'] . '" ; onclick = "deletedata(' . $row['id'] . ')"> Delete</a></li>
-                                        </ul>
-                                    </div>
-                                    <button id="updateButton_<?php echo $id; ?>"" class="btn btn-primary mt-1" style="display: none;" onclick="iddata(' . $row['id'] . ')" >Update</button>
-                                    <button id="deleteButton_ <?php echo $id; ?>" class="btn btn-danger mt-1" style="display: none; onclick = "deletedata(' . $row['id'] . ')">Delete</button>
-                                </td>
+                                <td>' . $date . '</td>
+                                <td>' . $entry_time . '</td>
+                                <td>' . $exit_time . '</td>
                             </tr>';
                             $count++;
                         }
@@ -186,11 +179,6 @@ $page = 'vehicleentry'; //buat page aktif di sidebar
         $(document).ready(function () {
             $('#search').on('keyup', function () {
                 searchByName();
-            });
-            $('#search').on('input', function () {
-                if ($(this).val().trim() === '') {
-                    location.reload();
-                }
             });
         });
 
@@ -342,26 +330,22 @@ $page = 'vehicleentry'; //buat page aktif di sidebar
 
         function searchByName() {
             var keyword = $('#search').val().trim();
-
             if (keyword === '') {
-                $('.box-container').show();
-                return;
+                $('#searchResult').load('vehicleentry.php #searchResult > *');
+            } else {
+                $.ajax({
+                    url: 'searchname.php',
+                    type: 'POST',
+                    data: { keyword: keyword },
+                    success: function (response) {
+                        $('#searchResult').html(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        $('#searchResult').html('<tr><td colspan="5">An error occurred while processing your request.</td></tr>');
+                    }
+                });
             }
-
-            $('.box-container').hide();
-
-            $.ajax({
-                url: 'searchname.php',
-                type: 'POST',
-                data: { keyword: keyword },
-                success: function (response) {
-                    $('#searchResult').html(response);
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                    $('#searchResult').html('<tr><td colspan="5">An error occurred while processing your request.</td></tr>');
-                }
-            });
         }
 
 

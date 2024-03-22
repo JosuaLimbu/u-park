@@ -190,11 +190,6 @@ $page = 'plateregist'; //buat page aktif di sidebar
             $('#search').on('keyup', function () {
                 searchByName();
             });
-            $('#search').on('input', function () {
-                if ($(this).val().trim() === '') {
-                    location.reload();
-                }
-            });
         });
 
         //Auto huruf besar input number plate
@@ -345,26 +340,22 @@ $page = 'plateregist'; //buat page aktif di sidebar
 
         function searchByName() {
             var keyword = $('#search').val().trim();
-
             if (keyword === '') {
-                $('.box-container').show();
-                return;
+                $('#searchResult').load('plateregist.php #searchResult > *');
+            } else {
+                $.ajax({
+                    url: 'searchname.php',
+                    type: 'POST',
+                    data: { keyword: keyword },
+                    success: function (response) {
+                        $('#searchResult').html(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        $('#searchResult').html('<tr><td colspan="5">An error occurred while processing your request.</td></tr>');
+                    }
+                });
             }
-
-            $('.box-container').hide();
-
-            $.ajax({
-                url: 'searchname.php',
-                type: 'POST',
-                data: { keyword: keyword },
-                success: function (response) {
-                    $('#searchResult').html(response);
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                    $('#searchResult').html('<tr><td colspan="5">An error occurred while processing your request.</td></tr>');
-                }
-            });
         }
 
 

@@ -206,11 +206,6 @@ $page = 'accountlist'; //buat page aktif di sidebar
             $('#search').on('keyup', function () {
                 searchByUsername();
             });
-            $('#search').on('input', function () {
-                if ($(this).val().trim() === '') {
-                    location.reload();
-                }
-            });
         });
 
         function submitForm() {
@@ -366,26 +361,22 @@ $page = 'accountlist'; //buat page aktif di sidebar
         }
         function searchByUsername() {
             var keyword = $('#search').val().trim();
-
             if (keyword === '') {
-                $('.box-container').show();
-                return;
+                $('#searchResult').load('accountlist.php #searchResult > *');
+            } else {
+                $.ajax({
+                    url: 'searchusername.php',
+                    type: 'POST',
+                    data: { keyword: keyword },
+                    success: function (response) {
+                        $('#searchResult').html(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        $('#searchResult').html('<tr><td colspan="5">An error occurred while processing your request.</td></tr>');
+                    }
+                });
             }
-
-            $('.box-container').hide();
-
-            $.ajax({
-                url: 'searchusername.php',
-                type: 'POST',
-                data: { keyword: keyword },
-                success: function (response) {
-                    $('#searchResult').html(response);
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                    $('#searchResult').html('<tr><td colspan="5">An error occurred while processing your request.</td></tr>');
-                }
-            });
         }
 
 
