@@ -16,7 +16,7 @@ $page = 'vehicleentry'; //buat page aktif di sidebar
     <title>Vehicle Entry</title>
     <link rel="icon" type="image/png" href="../../img/U-Park.png">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="plateregist.css">
+    <link rel="stylesheet" href="vehicleentry.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css"
         href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -52,6 +52,7 @@ $page = 'vehicleentry'; //buat page aktif di sidebar
                     <i class="fa fa-search" aria-hidden="true"></i>
                     <input type="text" name="search" id="search" placeholder="Search by name">
                 </div>
+                <i class='bx bx-filter'></i>
             </div>
 
             <div class="box-container">

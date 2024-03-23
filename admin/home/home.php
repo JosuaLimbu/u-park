@@ -4,6 +4,9 @@ if (!isset ($_SESSION["username"]) || !isset ($_SESSION["role"]) || $_SESSION["r
     header("Location: http://localhost/upark");
 }
 $page = 'home'; //buat page aktif di sidebar
+
+// Koneksi ke database
+include 'connect.php';
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +58,16 @@ $page = 'home'; //buat page aktif di sidebar
                 <li>
                     <i class='bx bx-car'></i>
                     <span class="text">
-                        <h3>100 Vehicle</h3>
+                        <h3>
+                            <?php
+                            $sql = "SELECT COUNT(*) AS total FROM tbl_vehicleentry WHERE STR_TO_DATE(date, '%d %M %Y') = CURDATE()";
+                            $result = mysqli_query($con, $sql);
+                            $row = mysqli_fetch_assoc($result);
+                            $totalVehicles = $row['total'];
+                            echo $totalVehicles;
+                            ?>
+                            Vehicle
+                        </h3>
                         <p>Today</p>
                     </span>
                 </li>
