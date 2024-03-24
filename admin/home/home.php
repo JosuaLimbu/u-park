@@ -66,7 +66,7 @@ include 'connect.php';
                             $totalVehicles = $row['total'];
                             echo $totalVehicles;
                             ?>
-                            Vehicle
+                            Vehicle Entry
                         </h3>
                         <p>Today</p>
                     </span>
