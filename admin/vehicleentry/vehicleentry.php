@@ -20,6 +20,7 @@ $page = 'vehicleentry'; //buat page aktif di sidebar
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css"
         href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" href="jam.css">
 </head>
 <style>
@@ -52,7 +53,9 @@ $page = 'vehicleentry'; //buat page aktif di sidebar
                     <i class="fa fa-search" aria-hidden="true"></i>
                     <input type="text" name="search" id="search" placeholder="Search by name">
                 </div>
-                <i class='bx bx-filter'></i>
+                <i class='bx bx-filter'> </i>
+                <input type="date" class="form-control" id="date" name="date"
+                    style="background-color: rgba(255, 255, 255, 0); margin-left: 15px; width: 140px;  ">
             </div>
 
             <div class="box-container">
@@ -71,7 +74,7 @@ $page = 'vehicleentry'; //buat page aktif di sidebar
                     <?php
                     include 'connect.php';
 
-                    $sql = "SELECT * FROM `tbl_vehicleentry`";
+                    $sql = "SELECT * FROM `tbl_vehicleentry` ORDER BY id DESC";
                     $result = mysqli_query($con, $sql);
                     if ($result) {
                         $count = 1;
@@ -177,28 +180,40 @@ $page = 'vehicleentry'; //buat page aktif di sidebar
         $(document).ready(function () {
             $('#role').val('admin');
         });
+
         $(document).ready(function () {
             $('#search').on('keyup', function () {
                 searchByName();
             });
         });
 
-        //Auto huruf besar input number plate
         $(document).ready(function () {
-            $('#plate_number').on('input', function () {
-                var plateNumber = $(this).val();
-                plateNumber = plateNumber.replace(/\s/g, '').toUpperCase();
-                $(this).val(plateNumber);
+            $('#date').hide();
+
+            $('.bx-filter').click(function () {
+                $('#date').toggle();
             });
+
         });
 
-        //Auto huruf besar update number plate
-        $(document).ready(function () {
-            $('#newplatenumber').on('input', function () {
-                var newPlateNumber = $(this).val();
-                newPlateNumber = newPlateNumber.replace(/\s/g, '').toUpperCase();
-                $(this).val(newPlateNumber);
-            });
+        $('#date').change(function () {
+            var selectedDate = $('#date').val();
+            if (selectedDate.trim() === '') {
+                $('#searchResult').load('vehicleentry.php #searchResult > *');
+            } else {
+                $.ajax({
+                    url: 'filterbydate.php',
+                    type: 'POST',
+                    data: { selectedDate: selectedDate },
+                    success: function (response) {
+                        $('#searchResult').html(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        $('#searchResult').html('<tr><td colspan="5">An error occurred while processing your request.</td></tr>');
+                    }
+                });
+            }
         });
 
         function submitForm() {
@@ -251,7 +266,6 @@ $page = 'vehicleentry'; //buat page aktif di sidebar
                 }
             });
         }
-
 
         function deletedata(id) {
             $.ajax({

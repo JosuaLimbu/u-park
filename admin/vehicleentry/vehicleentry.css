@@ -293,7 +293,7 @@
 	}
 	#content main .head-title .left p {
 		font-size: 40px;
-		font-weight: 6            00;
+		font-weight: 600;
 		margin-bottom: 10px;
 		color: var(--dark);
 	}
@@ -611,7 +611,7 @@
 
 	.box {
 
-		width: 1000px; 
+		width: 900px; 
 		height: 45px;
 		background-color: white;
 		border-radius: 10px;
@@ -641,6 +641,7 @@
 		margin-right: 100px; 
 		
 	}
+	
 
 
 
