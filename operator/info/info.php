@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset ($_SESSION["username"]) || !isset ($_SESSION["role"]) || $_SESSION["role"] != "admin") {
+if (!isset ($_SESSION["username"]) || !isset ($_SESSION["role"]) || $_SESSION["role"] != "operator") {
     header("Location: http://localhost/u-park");
 }
 $page = 'info'; //buat page aktif di sidebar
@@ -73,7 +73,7 @@ $page = 'info'; //buat page aktif di sidebar
                             their productivity. Thus, U-Park is not just a parking app, but a reliable partner in
                             addressing parking needs on campus. <br>
                             For information, assistance, or how to use, please contact <a
-                                href="https://wa.me/6285756958367">+62857 5695 8367</a>.
+                                href="https://wa.me/6285756958367">+62857 5695 8367</a>. <br><br>
                         <p style="text-align: center;">©2024 Limbu, Josua and Korengkeng, Vito Julio. All rights
                             reserved.</p>
                         </p>

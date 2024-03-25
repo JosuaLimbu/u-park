@@ -629,7 +629,7 @@ input:checked + .slider:before {
 	border-radius: 50%;
 }
 
-.gate-content-container {
+.gate-content-container1 {
     display: flex;
     align-items: center; 
 	display: flex;
@@ -638,5 +638,17 @@ input:checked + .slider:before {
 .gate-content-left {
     margin-right: 60px; /* Jarak antara gambar dan elemen di sebelah kanan */
 }
+.platedetect {
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    font-family: 'Poppins', sans-serif; 
+    font-weight: 600; 
+    font-size: 30px;
+    margin: 10px auto; 
+    text-align: center; 
+}
+
+
 
 

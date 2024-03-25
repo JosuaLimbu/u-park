@@ -44,25 +44,63 @@ $page = 'platedetection'; //buat page aktif di sidebar
             <div class="gate-container">
                 <div class="gate">
                     <h5>Entrance Gate</h5>
-                    <button class="btn btn-info" id="enableButton"><i class='bx bx-camera'></i> Enable</button>
+                    <button class="btn btn-info" id="enableButton1"><i class='bx bx-camera'></i> Enable</button>
+                    <button class="btn btn-info" id="disableButton1"><i class='bx bx-camera-off'></i> Disable</button>
+                </div>
+                <div class="gate">
+                    <h5>Exit Gate</h5>
+                    <button class="btn btn-info" id="enableButton2"><i class='bx bx-camera'></i> Enable</button>
                     <button class="btn btn-info" id="disableButton"><i class='bx bx-camera-off'></i> Disable</button>
                 </div>
             </div>
             <br>
-            <div class="gate-content-container" style="display: none;">
+            <div class="gate-content-container1" style="display: none;">
                 <div class=" gate-content-left">
                     <div>
                         <p>Entrance Gate</p>
-                        <img id="detectedImage" src="../../yolov5/videostream/0_detected.jpg" alt="Image Description">
+                        <img id="detectedImage" src="../../yolov5/videostream/0_detected.jpg" alt="Image Description"
+                            style="width: 85%">
                     </div>
                 </div>
                 <div class="gate-content-right">
+                    <div>
+                        <div>
+                            <p class="platedetect"></p>
+                            <p>Number Plate Detect</p>
+                        </div>
+                    </div>
+                    <br><br><br>
                     <div>
                         <label class="switch">
                             <input type="checkbox" id="gateSwitch">
                             <span class="slider round"></span>
                         </label>
-                        <p id="gateStatus">Close Gate</p>
+                        <p id="gateStatus">Gate Closed</p>
+                    </div>
+                </div>
+            </div>
+            <div class="gate-content-container2" style="display: none;">
+                <div class=" gate-content-left">
+                    <div>
+                        <p>Entrance Gate</p>
+                        <img id="detectedImage" src="../../yolov5/videostream/0_detected.jpg" alt="Image Description"
+                            style="width: 85%">
+                    </div>
+                </div>
+                <div class="gate-content-right">
+                    <div>
+                        <div>
+                            <p class="platedetect"></p>
+                            <p>Number Plate Detect</p>
+                        </div>
+                    </div>
+                    <br><br><br>
+                    <div>
+                        <label class="switch">
+                            <input type="checkbox" id="gateSwitch">
+                            <span class="slider round"></span>
+                        </label>
+                        <p id="gateStatus">Gate Closed</p>
                     </div>
                 </div>
             </div>
@@ -75,6 +113,8 @@ $page = 'platedetection'; //buat page aktif di sidebar
     <script src="../components/js/script.js"></script>
     <script src="../components/js/datetime.js"></script>
     <script src="../components/js/dropdown.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         function updateImage() {
             var detectedImage = document.getElementById("detectedImage");
@@ -82,26 +122,55 @@ $page = 'platedetection'; //buat page aktif di sidebar
         }
         setInterval(updateImage, 100);
 
-        document.getElementById("enableButton").addEventListener("click", function () {
-            document.querySelector(".gate-content-container").style.display = "flex";
+        document.getElementById("enableButton1").addEventListener("click", function () {
+            document.querySelector(".gate-content-container1").style.display = "flex";
             fetch("http://localhost:5000/opencam");
         });
 
-        document.getElementById("disableButton").addEventListener("click", function () {
-            document.querySelector(".gate-content-container").style.display = "none";
+        document.getElementById("disableButton1").addEventListener("click", function () {
+            document.querySelector(".gate-content-container1").style.display = "none";
             fetch("http://localhost:5000/closecam");
-        });
 
+            $.ajax({
+                url: 'clearplatein.php',
+                type: 'POST',
+                data: { action: 'delete_latest_plate' },
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
 
         document.getElementById("gateSwitch").addEventListener("change", function () {
             var gateStatusText = document.getElementById("gateStatus");
             if (this.checked) {
-                gateStatusText.textContent = "Open Gate";
+                gateStatusText.textContent = "Gate Open";
             } else {
-                gateStatusText.textContent = "Close Gate";
+                gateStatusText.textContent = "Gate Closed";
             }
         });
+
+        $(document).ready(function () {
+            function loadData() {
+                $.ajax({
+                    url: 'getnewplatein.php',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        $('.platedetect').text(response.number_plate);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+            setInterval(loadData, 100);
+        });
     </script>
+
 
 </body>
 
