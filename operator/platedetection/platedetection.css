@@ -636,7 +636,7 @@ input:checked + .slider:before {
 }
 
 .gate-content-left {
-    margin-right: 20px; /* Jarak antara gambar dan elemen di sebelah kanan */
+    margin-right: 60px; /* Jarak antara gambar dan elemen di sebelah kanan */
 }
 
 

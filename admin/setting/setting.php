@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset ($_SESSION["username"]) || !isset ($_SESSION["role"]) || $_SESSION["role"] != "admin") {
-    header("Location: http://localhost/upark");
+    header("Location: http://localhost/u-park");
 }
 $page = ''; //buat page aktif di sidebar
 ?>
@@ -94,32 +94,32 @@ $page = ''; //buat page aktif di sidebar
                 return;
             }
 
-    // Mengirim data form dengan AJAX
-    $.ajax({
-        type: 'POST',
-        url: 'changePas.php', // Sesuaikan dengan URL skrip PHP Anda
-        data: {
-            old_password: oldPassword,
-            new_password: newPassword,
-            confirm_new_password: confirmNewPassword
-        },
-        success: function(response) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Password successfully changed!',
-                text: response // Response dari skrip PHP (misalnya: "Password berhasil diubah!")
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'An error occurred while changing password! Please try again later.',
+            // Mengirim data form dengan AJAX
+            $.ajax({
+                type: 'POST',
+                url: 'changePas.php', // Sesuaikan dengan URL skrip PHP Anda
+                data: {
+                    old_password: oldPassword,
+                    new_password: newPassword,
+                    confirm_new_password: confirmNewPassword
+                },
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Password successfully changed!',
+                        text: response // Response dari skrip PHP (misalnya: "Password berhasil diubah!")
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'An error occurred while changing password! Please try again later.',
+                    });
+                }
             });
         }
-    });
-}
 
     </script>
 

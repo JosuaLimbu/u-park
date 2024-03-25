@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset ($_SESSION["username"]) || !isset ($_SESSION["role"]) || $_SESSION["role"] != "operator") {
-    header("Location: http://localhost/upark");
+    header("Location: http://localhost/u-park");
 }
 $page = 'platedetection'; //buat page aktif di sidebar
 ?>
