@@ -50,15 +50,15 @@ $page = 'platedetection'; //buat page aktif di sidebar
                 <div class="gate">
                     <h5>Exit Gate</h5>
                     <button class="btn btn-info" id="enableButton2"><i class='bx bx-camera'></i> Enable</button>
-                    <button class="btn btn-info" id="disableButton"><i class='bx bx-camera-off'></i> Disable</button>
+                    <button class="btn btn-info" id="disableButton2"><i class='bx bx-camera-off'></i> Disable</button>
                 </div>
             </div>
             <br>
             <div class="gate-content-container1" style="display: none;">
                 <div class=" gate-content-left">
                     <div>
-                        <p>Entrance Gate</p>
-                        <img id="detectedImage" src="../../yolov5/videostream/0_detected.jpg" alt="Image Description"
+                        <p>Entrance Gate Cam</p>
+                        <img id="detectedImage" src="../../yolov5/videostream/0_detected.jpg" alt="Entrance Gate"
                             style="width: 85%">
                     </div>
                 </div>
@@ -79,31 +79,7 @@ $page = 'platedetection'; //buat page aktif di sidebar
                     </div>
                 </div>
             </div>
-            <div class="gate-content-container2" style="display: none;">
-                <div class=" gate-content-left">
-                    <div>
-                        <p>Entrance Gate</p>
-                        <img id="detectedImage" src="../../yolov5/videostream/0_detected.jpg" alt="Image Description"
-                            style="width: 85%">
-                    </div>
-                </div>
-                <div class="gate-content-right">
-                    <div>
-                        <div>
-                            <p class="platedetect"></p>
-                            <p>Number Plate Detect</p>
-                        </div>
-                    </div>
-                    <br><br><br>
-                    <div>
-                        <label class="switch">
-                            <input type="checkbox" id="gateSwitch">
-                            <span class="slider round"></span>
-                        </label>
-                        <p id="gateStatus">Gate Closed</p>
-                    </div>
-                </div>
-            </div>
+
 
         </main>
         <!-- MAIN -->
@@ -160,7 +136,60 @@ $page = 'platedetection'; //buat page aktif di sidebar
                     type: 'GET',
                     dataType: 'json',
                     success: function (response) {
-                        $('.platedetect').text(response.number_plate);
+                        $('.platedetect').text(response.plate_number);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+            setInterval(loadData, 100);
+        });
+
+        //function mengecek deteksi dengan plateregist
+        $(document).ready(function () {
+            function loadData() {
+                $.ajax({
+                    url: 'getnewplatein.php',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        var plateNumber = response.plate_number;
+                        $('.platedetect').text(plateNumber);
+
+                        $.ajax({
+                            url: 'check_plateregist.php',
+                            type: 'POST',
+                            data: { plateNumber: plateNumber },
+                            success: function (response) {
+                                if (response == 'found') {
+                                    // Aktifkan switch
+                                    $('#gateSwitch').prop('checked', true);
+                                    $('#gateStatus').text('Gate Open');
+
+                                    // Kirim data ke tbl_vehicleentry
+                                    $.ajax({
+                                        url: 'post_vehicleentry.php',
+                                        type: 'POST',
+                                        data: {
+                                            name: response.name,
+                                            plateNumber: plateNumber,
+                                            date: response.date,
+                                            entryTime: response.entry_time
+                                        },
+                                        success: function (response) {
+                                            console.log(response);
+                                        },
+                                        error: function (xhr, status, error) {
+                                            console.error(xhr.responseText);
+                                        }
+                                    });
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error(xhr.responseText);
+                            }
+                        });
                     },
                     error: function (xhr, status, error) {
                         console.error(xhr.responseText);

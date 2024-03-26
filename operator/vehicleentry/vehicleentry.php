@@ -51,7 +51,7 @@ $page = 'vehicleentry'; //buat page aktif di sidebar
             <div class="box-top">
                 <div class="box">
                     <i class="fa fa-search" aria-hidden="true"></i>
-                    <input type="text" name="search" id="search" placeholder="Search by name">
+                    <input type="text" name="search" id="search" placeholder="Search by name or plate number">
                 </div>
                 <i class='bx bx-filter'> </i>
                 <input type="date" class="form-control" id="date" name="date"

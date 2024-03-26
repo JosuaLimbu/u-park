@@ -15,7 +15,7 @@ $keyword = $_POST['keyword'];
 if ($keyword == "") {
     $sql = "SELECT * FROM tbl_vehicleentry";
 } else {
-    $sql = "SELECT * FROM tbl_vehicleentry WHERE name LIKE '%$keyword%'";
+    $sql = "SELECT * FROM tbl_vehicleentry WHERE name LIKE '%$keyword%' || plate_number LIKE '%$keyword%'";
 }
 
 $result = $conn->query($sql);
