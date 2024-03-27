@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset ($_SESSION["username"]) || !isset ($_SESSION["role"]) || $_SESSION["role"] != "operator") {
+if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["role"] != "operator") {
     header("Location: http://localhost/u-park");
 }
 $page = 'platedetection'; //buat page aktif di sidebar
@@ -154,15 +154,15 @@ $page = 'platedetection'; //buat page aktif di sidebar
                     type: 'GET',
                     dataType: 'json',
                     success: function (response) {
-                        var plateNumber = response.plate_number;
-                        $('.platedetect').text(plateNumber);
+                        $('.platedetect').text(response.plate_number);
 
                         $.ajax({
                             url: 'check_plateregist.php',
                             type: 'POST',
-                            data: { plateNumber: plateNumber },
+                            data: { platedetect: response.plate_number },
+                            dataType: 'json',
                             success: function (response) {
-                                if (response == 'found') {
+                                if (Object.keys(response).length > 0) { // Periksa apakah respons tidak kosong
                                     // Aktifkan switch
                                     $('#gateSwitch').prop('checked', true);
                                     $('#gateStatus').text('Gate Open');
@@ -173,9 +173,9 @@ $page = 'platedetection'; //buat page aktif di sidebar
                                         type: 'POST',
                                         data: {
                                             name: response.name,
-                                            plateNumber: plateNumber,
+                                            plate_number: response.plate_number,
                                             date: response.date,
-                                            entryTime: response.entry_time
+                                            entryTime: response.entry_time // Menambah entryTime
                                         },
                                         success: function (response) {
                                             console.log(response);
@@ -198,6 +198,8 @@ $page = 'platedetection'; //buat page aktif di sidebar
             }
             setInterval(loadData, 100);
         });
+
+
     </script>
 
 
