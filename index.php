@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn = new mysqli($servername, $username, $password, $dbname);
 
     if ($conn->connect_error) {
-        die ("Connection failed: " . $conn->connect_error);
+        die("Connection failed: " . $conn->connect_error);
     }
 
     $username = $_POST['username'];
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="password" name="password" id="password" placeholder="Password" required />
                     <i class="far fa-eye-slash" id="togglePassword"></i>
                 </div>
-                <?php if (isset ($error_message)) { ?>
+                <?php if (isset($error_message)) { ?>
                     <p class="err">
                         <?php echo $error_message; ?>
                     </p>

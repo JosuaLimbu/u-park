@@ -41,8 +41,8 @@ p.err {
 }
 .input-container input:focus,
 select:focus {
-    outline: none; /* Menghilangkan outline */
-    border-color: #AFAFAF; /* Mengubah warna border saat focus */
+    outline: none; 
+    border-color: #AFAFAF; 
 }
 
 

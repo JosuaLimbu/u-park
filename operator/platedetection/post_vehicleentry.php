@@ -1,5 +1,3 @@
-// post_vehicleentry.php
-
 <?php
 include 'db_connection.php';
 

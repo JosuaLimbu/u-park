@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset ($_SESSION["username"]) || !isset ($_SESSION["role"]) || $_SESSION["role"] != "admin") {
+if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
     header("Location: http://localhost/u-park");
     exit;
 }
@@ -310,11 +310,11 @@ $page = 'plateregist'; //buat page aktif di sidebar
             var newname = $("#newname").val();
             var newplatenumber = $("#newplatenumber").val();
 
-            if (newname.trim() === '' || newplatenumber.trim() === '') {
+            if (newplatenumber.trim() === '') {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Please fill in all fields!',
+                    text: 'Please fill in the plate number field',
                 });
                 return;
             }

@@ -7,7 +7,7 @@ $dbname = "db_upark";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
-    die ("Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -15,20 +15,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $newname = $_POST['newname'];
     $newplatenumber = $_POST['newplatenumber'];
 
-
     $sql = "SELECT * FROM tbl_plateregist WHERE id='$id'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        $sql = "UPDATE tbl_plateregist SET name = '$newname', plate_number = '$newplatenumber'WHERE id = $id";
-        if ($conn->query($sql) === TRUE) {
-            echo "Name and plate number updated successfully";
+        if ($newname != '') {
+            $sql = "UPDATE tbl_plateregist SET name = '$newname', plate_number = '$newplatenumber' WHERE id = $id";
         } else {
-            echo "Error updating plate number: " . $conn->error;
+            $sql = "UPDATE tbl_plateregist SET plate_number = '$newplatenumber' WHERE id = $id";
+        }
+
+        if ($conn->query($sql) === TRUE) {
+            echo "Data updated successfully";
+        } else {
+            echo "Error updating data: " . $conn->error;
         }
     } else {
-        echo "Current plate number is incorrect";
+        echo "Data not found";
     }
 }
+
 
 $conn->close();
