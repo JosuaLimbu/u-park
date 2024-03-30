@@ -164,7 +164,7 @@ $page = ''; //buat page aktif di sidebar
                     <div class="user-details">
                         <table class="profile-details">
                             <tr>
-                                <td>Nama</td>
+                                <td>Username</td>
                                 <td>:</td>
                                 <td>
                                     <?php echo $username; ?>

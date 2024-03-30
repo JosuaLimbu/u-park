@@ -148,6 +148,9 @@ $page = 'platedetection'; //buat page aktif di sidebar
 
         //function mengecek deteksi dengan plateregist
         $(document).ready(function () {
+            var lastPostTime = 0;
+            var plateChecked = {};
+
             function loadData() {
                 $.ajax({
                     url: 'getnewplatein.php',
@@ -155,41 +158,42 @@ $page = 'platedetection'; //buat page aktif di sidebar
                     dataType: 'json',
                     success: function (response) {
                         $('.platedetect').text(response.plate_number);
+                        if (!(response.plate_number in plateChecked)) {
+                            plateChecked[response.plate_number] = true;
+                            $.ajax({
+                                url: 'checkplateregist.php',
+                                type: 'POST',
+                                data: { platedetect: response.plate_number },
+                                dataType: 'json',
+                                success: function (response) {
+                                    if (Object.keys(response).length > 0) {
+                                        // Aktifkan switch
+                                        $('#gateSwitch').prop('checked', true);
+                                        $('#gateStatus').text('Gate Open');
 
-                        $.ajax({
-                            url: 'check_plateregist.php',
-                            type: 'POST',
-                            data: { platedetect: response.plate_number },
-                            dataType: 'json',
-                            success: function (response) {
-                                if (Object.keys(response).length > 0) { // Periksa apakah respons tidak kosong
-                                    // Aktifkan switch
-                                    $('#gateSwitch').prop('checked', true);
-                                    $('#gateStatus').text('Gate Open');
-
-                                    // Kirim data ke tbl_vehicleentry
-                                    $.ajax({
-                                        url: 'post_vehicleentry.php',
-                                        type: 'POST',
-                                        data: {
-                                            name: response.name,
-                                            plate_number: response.plate_number,
-                                            date: response.date,
-                                            entryTime: response.entry_time // Menambah entryTime
-                                        },
-                                        success: function (response) {
-                                            console.log(response);
-                                        },
-                                        error: function (xhr, status, error) {
-                                            console.error(xhr.responseText);
-                                        }
-                                    });
+                                        // Kirim data ke tbl_vehicleentry
+                                        $.ajax({
+                                            url: 'postvehicleentry.php',
+                                            type: 'POST',
+                                            data: {
+                                                name: response.name,
+                                                plate_number: response.plate_number,
+                                            },
+                                            success: function (response) {
+                                                console.log(response);
+                                                lastPostTime = currentTime;
+                                            },
+                                            error: function (xhr, status, error) {
+                                                console.error(xhr.responseText);
+                                            }
+                                        });
+                                    }
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error(xhr.responseText);
                                 }
-                            },
-                            error: function (xhr, status, error) {
-                                console.error(xhr.responseText);
-                            }
-                        });
+                            });
+                        }
                     },
                     error: function (xhr, status, error) {
                         console.error(xhr.responseText);
@@ -198,7 +202,6 @@ $page = 'platedetection'; //buat page aktif di sidebar
             }
             setInterval(loadData, 100);
         });
-
 
     </script>
 
