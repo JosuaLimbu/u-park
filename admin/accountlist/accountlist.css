@@ -593,7 +593,7 @@
 		border: 2px solid #AFAFAF;
 		background-color: #eee;
 		color: #666666;
-		font-family: "Montserrat Medium";
+		font-family: 'Montserrat', sans-serif;
 		font-size: 14px;
 		margin-right: 20px;
 	}

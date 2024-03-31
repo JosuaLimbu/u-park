@@ -7,10 +7,10 @@ $dbname = "db_upark";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
-    die ("Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset ($_POST['action']) && $_POST['action'] == 'delete_latest_plate') {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['action'] == 'delete_latest_plate') {
 
     $sql = "DELETE FROM tbl_detectout";
 

@@ -590,7 +590,7 @@ select:focus {
 }
 
 .input-container input {
-    font-family: "Montserrat Medium";
+    font-family: 'Montserrat', sans-serif;
     padding-left: 10px; 
 }
 

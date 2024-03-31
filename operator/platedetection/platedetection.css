@@ -634,11 +634,27 @@ input:checked + .slider:before {
     align-items: center; 
 	display: flex;
 }
+.gate-content-container2 {
+    display: flex;
+    align-items: center; 
+	display: flex;
+}
 
 .gate-content-left {
     margin-right: 60px; 
 }
 .platedetect {
+    border: 2px solid black; 
+    border-radius: 5px;
+    padding: 10px; 
+    font-family: 'Poppins', sans-serif; 
+    font-weight: 600; 
+    font-size: 30px; 
+    margin: 10px auto;
+    text-align: center; 
+	height: 70px;
+}
+.platedetect2 {
     border: 2px solid black; 
     border-radius: 5px;
     padding: 10px; 

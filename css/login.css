@@ -187,7 +187,7 @@ select {
     background-color: #eee;
     width: 95%; 
     margin: 8px 0; 
-    font-family: "Montserrat Medium";
+    font-family: 'Montserrat', sans-serif;
     color: #666666;
     margin-right: 20px;
     display: flex; 
@@ -202,7 +202,7 @@ select option {
     background-color: #eee; 
     width: 95%;
     margin: 8px 0; 
-    font-family: "Montserrat Medium";
+    font-family: 'Montserrat', sans-serif;
     margin-bottom: 50px;
 	font-size: 14px;
 }
@@ -222,7 +222,7 @@ select option {
 }
 
 .input-container input {
-    font-family: "Montserrat Medium";
+    font-family: 'Montserrat', sans-serif;
     padding-left: 10px; 
 }
 
@@ -247,7 +247,7 @@ button {
     letter-spacing: 1px;
     transition: transform 80ms ease-in;
     margin: 8px 0; 
-    font-family: "Montserrat Medium";
+    font-family: 'Montserrat', sans-serif;
     margin-right: 20px;
 }
 
