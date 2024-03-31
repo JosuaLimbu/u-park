@@ -284,7 +284,7 @@ body {
 /* MAIN */
 #content main {
 	width: 100%;
-	padding: 36px 24px;
+	padding: 36px 10px 36px 24px;
 	font-family: var(--montserrat);
 	max-height: calc(100vh - 56px);
 	overflow-y: auto;
@@ -296,10 +296,11 @@ body {
 	justify-content: space-between;
 	grid-gap: 16px;
 	flex-wrap: wrap;
+	height: 85px;
 }
 #content main .head-title .left p {
 	font-size: 40px;
-	font-weight: 6            00;
+	font-weight: 600;
 	margin-bottom: 10px;
 	color: var(--dark);
 }

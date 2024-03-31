@@ -40,7 +40,21 @@ $page = 'platedetection'; //buat page aktif di sidebar
                 <div class="left" style="font-family: 'Montserrat', sans-serif; font-weight: 600">
                     <p>Plate Detection</p>
                 </div>
+                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+                    <div class="toast-header">
+                        <strong class="mr-auto">Success</strong>
+                        <small class="text-muted"></small>
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="toast-body">
+                        Gate opened successfully
+                    </div>
+                </div>
+
             </div>
+            <br>
             <div class="gate-container">
                 <div class="gate">
                     <h5>Entrance Gate</h5>
@@ -121,11 +135,12 @@ $page = 'platedetection'; //buat page aktif di sidebar
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="ajaxin.js"></script>
     <script src="ajaxout.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-
-
-
-
+        $(document).ready(function () {
+            $('.toast').toast('hide');
+        });
     </script>
 
 

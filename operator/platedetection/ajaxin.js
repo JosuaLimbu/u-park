@@ -1,21 +1,24 @@
+// Function untuk memperbarui gambar deteksi plat pada pintu masuk
 function updateImage() {
     var detectedImage = document.getElementById("detectedImage");
     detectedImage.src = "../../yolov5/videostream/0_detected.jpg?timestamp=" + new Date().getTime();
 }
 setInterval(updateImage, 100);
 
-//Entrance Gate Function
+// Function untuk mengaktifkan kamera pintu masuk
 document.getElementById("enableButton1").addEventListener("click", function () {
     setTimeout(function () {
         document.querySelector(".gate-content-container1").style.display = "flex";
-    }, 10)
+    }, 10);
     fetch("http://localhost:5000/opencam");
 });
 
+// Function untuk menonaktifkan kamera pintu masuk
 document.getElementById("disableButton1").addEventListener("click", function () {
     document.querySelector(".gate-content-container1").style.display = "none";
     fetch("http://localhost:5000/closecam");
 
+    // AJAX untuk membersihkan data plat terbaru
     $.ajax({
         url: 'in/clearplatein.php',
         type: 'POST',
@@ -29,35 +32,8 @@ document.getElementById("disableButton1").addEventListener("click", function () 
     });
 });
 
+// Function untuk memeriksa deteksi plat dengan plateregist
 $(document).ready(function () {
-    function loadData() {
-        $.ajax({
-            url: 'in/getnewplatein.php',
-            type: 'GET',
-            dataType: 'json',
-            success: function (response) {
-                $('.platedetect').text(response.plate_number);
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
-    }
-    setInterval(loadData, 100);
-});
-
-document.getElementById("gateSwitch").addEventListener("change", function () {
-    var gateStatusText = document.getElementById("gateStatus");
-    if (this.checked) {
-        gateStatusText.textContent = "Gate Open";
-    } else {
-        gateStatusText.textContent = "Gate Closed";
-    }
-});
-
-//function mengecek deteksi dengan plateregist
-$(document).ready(function () {
-    var lastPostTime = 0;
     var plateChecked = {};
 
     function loadData() {
@@ -90,7 +66,8 @@ $(document).ready(function () {
                                     },
                                     success: function (response) {
                                         console.log(response);
-                                        lastPostTime = currentTime;
+                                        // Tampilkan toast
+                                        updateGateStatusAndShowToast();
                                     },
                                     error: function (xhr, status, error) {
                                         console.error(xhr.responseText);
@@ -112,3 +89,37 @@ $(document).ready(function () {
     setInterval(loadData, 100);
 });
 
+// Function untuk menampilkan toast dengan hitungan mundur
+function showToastWithCountdown(message) {
+    $('.toast-body').text(message);
+    $('.toast').toast('show');
+    var count = 5;
+    var countDownInterval = setInterval(function () {
+        $('.toast .text-muted').html('<small class="text-muted">' + count + ' Second</small>');
+        count--;
+        if (count < 0) {
+            clearInterval(countDownInterval);
+            $('.toast').toast('hide');
+        }
+    }, 1000);
+}
+
+// Function untuk mengaktifkan switch dan menampilkan toast message saat berhasil POST data ke tbl_vehicleentry
+function updateGateStatusAndShowToast() {
+    $('#gateSwitch').prop('checked', true);
+    $('#gateStatus').text('Gate Open');
+    showToastWithCountdown('Gate opened successfully');
+    // Setelah 5 detik, sembunyikan toast
+    setTimeout(function () {
+        $('.toast').toast('hide');
+    }, 5000);
+}
+
+$(document).ready(function () {
+    // Memperbarui gate status dan menampilkan toast saat berhasil POST data ke tbl_vehicleentry
+    $('#gateSwitch').on('change', function () {
+        if ($(this).is(':checked')) {
+            updateGateStatusAndShowToast();
+        }
+    });
+});
