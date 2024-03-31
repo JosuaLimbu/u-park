@@ -99,11 +99,11 @@ $page = 'platedetection'; //buat page aktif di sidebar
                     </div>
                     <br><br><br>
                     <div>
-                        <label class="switch">
-                            <input type="checkbox" id="gateSwitch">
+                        <label class="switch2">
+                            <input type="checkbox" id="gateSwitch2">
                             <span class="slider round"></span>
                         </label>
-                        <p id="gateStatus">Gate Closed</p>
+                        <p id="gateStatus2">Gate Closed</p>
                     </div>
                 </div>
             </div>
@@ -119,171 +119,10 @@ $page = 'platedetection'; //buat page aktif di sidebar
     <script src="../components/js/datetime.js"></script>
     <script src="../components/js/dropdown.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="ajaxin.js"></script>
+    <script src="ajaxout.js"></script>
     <script>
-        function updateImage() {
-            var detectedImage = document.getElementById("detectedImage");
-            detectedImage.src = "../../yolov5/videostream/0_detected.jpg?timestamp=" + new Date().getTime();
-        }
-        setInterval(updateImage, 100);
 
-        function updateExitGateImage() {
-            var detectedImage2 = document.getElementById("detectedImage2");
-            detectedImage2.src = "http://localhost:5000/image_feed?timestamp=" + new Date().getTime();
-        }
-        setInterval(updateExitGateImage, 80);
-
-
-        document.getElementById("enableButton1").addEventListener("click", function () {
-            setTimeout(function () {
-                document.querySelector(".gate-content-container1").style.display = "flex";
-            }, 10)
-            fetch("http://localhost:5000/opencam");
-        });
-
-        document.getElementById("disableButton1").addEventListener("click", function () {
-            document.querySelector(".gate-content-container1").style.display = "none";
-            fetch("http://localhost:5000/closecam");
-
-            $.ajax({
-                url: 'in/clearplatein.php',
-                type: 'POST',
-                data: { action: 'delete_latest_plate' },
-                success: function (response) {
-                    console.log(response);
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
-        });
-
-        $(document).ready(function () {
-            function loadData() {
-                $.ajax({
-                    url: 'in/getnewplatein.php',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (response) {
-                        $('.platedetect').text(response.plate_number);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            }
-            setInterval(loadData, 100);
-        });
-
-        document.getElementById("enableButton2").addEventListener("click", function () {
-            setTimeout(function () {
-                document.querySelector(".gate-content-container2").style.display = "flex";
-            }, 10)
-            fetch("http://localhost:5000/opencam");
-        });
-
-        //function mengecek deteksi dengan plateregist
-        $(document).ready(function () {
-            var lastPostTime = 0;
-            var plateChecked = {};
-
-            function loadData() {
-                $.ajax({
-                    url: 'in/getnewplatein.php',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (response) {
-                        $('.platedetect').text(response.plate_number);
-                        if (!(response.plate_number in plateChecked)) {
-                            plateChecked[response.plate_number] = true;
-                            $.ajax({
-                                url: 'in/checkplateregist.php',
-                                type: 'POST',
-                                data: { platedetect: response.plate_number },
-                                dataType: 'json',
-                                success: function (response) {
-                                    if (Object.keys(response).length > 0) {
-                                        // Aktifkan switch
-                                        $('#gateSwitch').prop('checked', true);
-                                        $('#gateStatus').text('Gate Open');
-
-                                        // Kirim data ke tbl_vehicleentry
-                                        $.ajax({
-                                            url: 'in/postvehicleentry.php',
-                                            type: 'POST',
-                                            data: {
-                                                name: response.name,
-                                                plate_number: response.plate_number,
-                                            },
-                                            success: function (response) {
-                                                console.log(response);
-                                                lastPostTime = currentTime;
-                                            },
-                                            error: function (xhr, status, error) {
-                                                console.error(xhr.responseText);
-                                            }
-                                        });
-                                    }
-                                },
-                                error: function (xhr, status, error) {
-                                    console.error(xhr.responseText);
-                                }
-                            });
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            }
-            setInterval(loadData, 100);
-        });
-
-        //Exit Gate Function
-        document.getElementById("disableButton2").addEventListener("click", function () {
-            document.querySelector(".gate-content-container2").style.display = "none";
-            fetch("http://localhost:5000/closecam");
-
-            $.ajax({
-                url: 'out/clearplateout.php',
-                type: 'POST',
-                data: { action: 'delete_latest_plate' },
-                success: function (response) {
-                    console.log(response);
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr.responseText);
-                }
-            });
-        });
-
-        document.getElementById("gateSwitch").addEventListener("change", function () {
-            var gateStatusText = document.getElementById("gateStatus");
-            if (this.checked) {
-                gateStatusText.textContent = "Gate Open";
-            } else {
-                gateStatusText.textContent = "Gate Closed";
-            }
-        });
-
-
-
-        $(document).ready(function () {
-            function loadData() {
-                $.ajax({
-                    url: 'out/getnewplateout.php',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (response) {
-                        $('.platedetect2').text(response.plate_number);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            }
-            setInterval(loadData, 100);
-        });
 
 
 

@@ -15,7 +15,7 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $data = array('plate_number' => $row['plate_number']);
+    $data = array('plate_number2' => $row['plate_number']);
     echo json_encode($data);
 } else {
     echo "0 results";
