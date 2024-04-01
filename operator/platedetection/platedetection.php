@@ -40,93 +40,113 @@ $page = 'platedetection'; //buat page aktif di sidebar
                 <div class="left" style="font-family: 'Montserrat', sans-serif; font-weight: 600">
                     <p>Plate Detection</p>
                 </div>
-                <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
-                    <div class="toast-header">
-                        <strong class="mr-auto">Success</strong>
-                        <small class="text-muted"></small>
-                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="toast-body">
-                        Gate opened successfully
-                    </div>
-                </div>
-
             </div>
             <br>
+
             <div class="gate-container">
                 <div class="gate">
                     <h5>Entrance Gate</h5>
                     <button class="btn btn-info" id="enableButton1"><i class='bx bx-camera'></i> Enable</button>
-                    <button class="btn btn-info" id="disableButton1"><i class='bx bx-camera-off'></i> Disable</button>
+                    <button class="btn btn-info" id="disableButton1"><i class='bx bx-camera-off'></i>
+                        Disable</button>
+                    <br><br>
+                    <!-- untuk entry gate -->
+                    <div class="gate-content-container1" style="display: none;">
+                        <div class=" gate-content-left">
+                            <div>
+                                <p>Entrance Gate Cam</p>
+                                <img id="detectedImage" src="../../yolov5/videostream/0_detected.jpg"
+                                    alt="Entrance Gate" style="width: 85%; border-radius: 10px;">
+                            </div>
+                        </div>
+                        <div class="gate-content-right">
+                            <div>
+                                <div>
+                                    <p class="platedetect"></p>
+                                    <p>Number Plate Detect</p>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="switch">
+                                    <input type="checkbox" id="gateSwitch1">
+                                    <span class="slider round"></span>
+                                </label>
+                                <p id="gateStatus1">Gate Closed</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="gate">
                     <h5>Exit Gate</h5>
                     <button class="btn btn-info" id="enableButton2"><i class='bx bx-camera'></i> Enable</button>
-                    <button class="btn btn-info" id="disableButton2"><i class='bx bx-camera-off'></i> Disable</button>
+                    <button class="btn btn-info" id="disableButton2"><i class='bx bx-camera-off'></i>
+                        Disable</button>
+                    <br><br>
+                    <!-- Untuk exit gate -->
+                    <div class="gate-content-container2" style="display: none;">
+                        <div class="gate-content-left">
+                            <div>
+                                <p>Exit Gate Cam</p>
+                                <img id="detectedImage2" src="../../yolov5/videostream/0_detected.jpg"
+                                    alt="Exit Gate Cam" style="width: 85%;border-radius: 10px;">
+                            </div>
+                        </div>
+                        <div class="gate-content-right">
+                            <div>
+                                <div>
+                                    <p class="platedetect2"></p>
+                                    <p>Number Plate Detect</p>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="switch2">
+                                    <input type="checkbox" id="gateSwitch2">
+                                    <span class="slider round"></span>
+                                </label>
+                                <p id="gateStatus2">Gate Closed</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <br>
-            <!-- untuk entry gate -->
-            <div class="gate-content-container1" style="display: none;">
-                <div class=" gate-content-left">
-                    <div>
-                        <p>Entrance Gate Cam</p>
-                        <img id="detectedImage" src="../../yolov5/videostream/0_detected.jpg" alt="Entrance Gate"
-                            style="width: 85%">
-                    </div>
-                </div>
-                <div class="gate-content-right">
-                    <div>
-                        <div>
-                            <p class="platedetect"></p>
-                            <p>Number Plate Detect</p>
-                        </div>
-                    </div>
-                    <br><br><br>
-                    <div>
-                        <label class="switch">
-                            <input type="checkbox" id="gateSwitch">
-                            <span class="slider round"></span>
-                        </label>
-                        <p id="gateStatus">Gate Closed</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Untuk exit gate -->
-            <div class="gate-content-container2" style="display: none;">
-                <div class="gate-content-left">
-                    <div>
-                        <p>Exit Gate Cam</p>
-                        <img id="detectedImage2" src="http://localhost:5000/image_feed" alt="Exit Gate Cam"
-                            style="width: 85%">
-                    </div>
-                </div>
-                <div class="gate-content-right">
-                    <div>
-                        <div>
-                            <p class="platedetect2"></p>
-                            <p>Number Plate Detect</p>
-                        </div>
-                    </div>
-                    <br><br><br>
-                    <div>
-                        <label class="switch2">
-                            <input type="checkbox" id="gateSwitch2">
-                            <span class="slider round"></span>
-                        </label>
-                        <p id="gateStatus2">Gate Closed</p>
-                    </div>
-                </div>
-            </div>
-
-
 
         </main>
         <!-- MAIN -->
     </section>
+    <div aria-live="polite" aria-atomic="true" style="position: absolute; top: 50px; right: 10px; z-index: 1050;">
+        <div style="position: relative;">
+
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false"
+                id="entranceToast">
+                <div class="toast-header">
+                    <strong class="mr-auto">Success</strong>
+                    <small class="text-muted">just now</small>
+                    <button type="button" class="ml-2 mb-1 close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    Entrance Gate opened successfully
+                </div>
+            </div>
+
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false"
+                id="exitToast">
+                <div class="toast-header">
+                    <strong class="mr-auto">Success</strong>
+                    <small class="text-muted">just now</small>
+                    <button type="button" class="ml-2 mb-1 close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    Exit Gate opened successfully
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- CONTENT -->
 
     <script src="../components/js/script.js"></script>
@@ -139,7 +159,31 @@ $page = 'platedetection'; //buat page aktif di sidebar
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('.toast').toast('hide');
+            $('.close').click(function () {
+                $(this).closest('.toast').toast('hide');
+            });
+
+            function hideToast(toastId) {
+                setTimeout(function () {
+                    $(toastId).toast('hide');
+                }, 5000);
+            }
+
+            var observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutation) {
+                    if ($('#gateStatus1').text() === 'Gate Open') {
+                        $('#entranceToast').toast('show');
+                        hideToast('#entranceToast');
+                    }
+                    if ($('#gateStatus2').text() === 'Gate Open') {
+                        $('#exitToast').toast('show');
+                        hideToast('#exitToast');
+                    }
+                });
+            });
+
+            observer.observe(document.getElementById('gateStatus1'), { childList: true });
+            observer.observe(document.getElementById('gateStatus2'), { childList: true });
         });
     </script>
 

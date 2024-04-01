@@ -40,7 +40,7 @@ if (isset($_POST['selectedDate'])) {
             $output .= '</tr>';
         }
     } else {
-        $output .= '<tr><td colspan="5">No data found for selected date. ' . $formattedDate . '</td></tr>';
+        $output .= '<tr><td colspan="5">No data found for selected date.</td></tr>';
     }
 
     echo $output;

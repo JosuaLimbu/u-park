@@ -1,20 +1,20 @@
-//Exit Gate Function
+// Function untuk memperbarui gambar deteksi plat pada pintu keluar
 function updateExitGateImage() {
     var detectedImage2 = document.getElementById("detectedImage2");
-    detectedImage2.src = "http://localhost:5000/image_feed?timestamp=" + new Date().getTime();
+    detectedImage2.src = "../../yolov5/videostream/0_detected.jpg?timestamp=" + new Date().getTime();
 }
 setInterval(updateExitGateImage, 80);
 
 document.getElementById("enableButton2").addEventListener("click", function () {
     setTimeout(function () {
-        document.querySelector(".gate-content-container2").style.display = "flex";
+        document.querySelector(".gate-content-container2").style.display = "block";
     }, 10)
-    fetch("http://localhost:5000/opencam");
+    fetch("http://localhost:5000/opencam2");
 });
 
 document.getElementById("disableButton2").addEventListener("click", function () {
     document.querySelector(".gate-content-container2").style.display = "none";
-    fetch("http://localhost:5000/closecam");
+    fetch("http://localhost:5000/closecam2");
 
     $.ajax({
         url: 'out/clearplateout.php',
@@ -95,8 +95,6 @@ $(document).ready(function () {
                                         // Aktifkan switch jika berhasil
                                         $('#gateSwitch2').prop('checked', true);
                                         $('#gateStatus2').text('Gate Open');
-                                        // Tampilkan toast
-                                        updateGateStatusAndShowToast();
                                     },
                                     error: function (xhr, status, error) {
                                         console.error(xhr.responseText);
@@ -118,37 +116,10 @@ $(document).ready(function () {
     setInterval(loadData, 100);
 });
 
-// Function untuk menampilkan toast dengan hitungan mundur
-function showToastWithCountdown(message) {
-    $('.toast-body').text(message);
-    $('.toast').toast('show');
-    var count = 5;
-    var countDownInterval = setInterval(function () {
-        $('.toast .text-muted').html('<small class="text-muted">' + count + ' Second</small>');
-        count--;
-        if (count < 0) {
-            clearInterval(countDownInterval);
-            $('.toast').toast('hide');
-        }
-    }, 1000);
-}
-
-// Function untuk mengaktifkan switch dan menampilkan toast message saat berhasil POST data ke tbl_vehicleentry
-function updateGateStatusAndShowToast() {
-    $('#gateSwitch2').prop('checked', true);
-    $('#gateStatus2').text('Gate Open');
-    showToastWithCountdown('Gate opened successfully');
-    // Setelah 5 detik, sembunyikan toast
-    setTimeout(function () {
-        $('.toast').toast('hide');
-    }, 5000);
-}
-
 $(document).ready(function () {
-    // Memperbarui gate status dan menampilkan toast saat berhasil POST data ke tbl_vehicleentry
     $('#gateSwitch2').on('change', function () {
         if ($(this).is(':checked')) {
-            updateGateStatusAndShowToast();
+            updateGateStatus(2);
         }
     });
 });
