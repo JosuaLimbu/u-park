@@ -215,6 +215,7 @@ $page = 'vehicleentry'; //buat page aktif di sidebar
                 });
             }
         });
+        
 
         function submitForm() {
             var name = $('#name').val();
