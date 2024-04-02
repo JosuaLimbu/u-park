@@ -68,6 +68,7 @@ $(document).ready(function () {
                                         console.log(response);
                                         if ($('#gateSwitch1').is(':checked')) {
                                             $('#entranceToast').toast('show');
+                                            fetch("http://192.168.43.237/setPOS?servoPOS=180"); // fetch control servo melalui API
                                             setTimeout(function () {
                                                 $('#entranceToast').toast('hide');
                                             }, 5000);
@@ -99,11 +100,15 @@ $(document).ready(function () {
         var gateStatusText = $('#gateStatus1');
         if ($(this).is(':checked')) {
             gateStatusText.text('Gate Open');
+            //Ganti sesuai ip yang tersedia nantinya
+            fetch("http://192.168.43.237/setPOS?servoPOS=180"); // fetch control servo melalui API
             $('#entranceToast').toast('show');
             setTimeout(function () {
                 $('#entranceToast').toast('hide');
             }, 5000);
         } else {
+            //Ganti sesuai ip yang tersedia nantinya
+            fetch("http://192.168.43.237/setPOS?servoPOS=0"); // fetch control servo melalui API
             gateStatusText.text('Gate Closed');
             $('#entranceToast').toast('hide');
         }

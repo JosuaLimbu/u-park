@@ -53,6 +53,7 @@ document.getElementById("gateSwitch2").addEventListener("change", function () {
         gateStatusText.textContent = "Gate Open";
     } else {
         gateStatusText.textContent = "Gate Closed";
+        
     }
 });
 
@@ -90,6 +91,8 @@ $(document).ready(function () {
                                         lastPostTime = new Date().getTime();
                                         $('#gateSwitch2').prop('checked', true);
                                         $('#gateStatus2').text('Gate Open');
+                                        //Ganti sesuai ip yang tersedia nantinya
+                                        fetch("http://192.168.43.70/setPOS?servoPOS=180"); // fetch control servo melalui API
                                         $('#exitToast').toast('show');
                                         setTimeout(function () {
                                             $('#exitToast').toast('hide');
@@ -120,12 +123,17 @@ $(document).ready(function () {
         if ($(this).is(':checked')) {
             $('#gateStatus2').text('Gate Open');
             $('#exitToast').toast('show');
+            //Ganti sesuai ip yang tersedia nantinya
+            fetch("http://192.168.43.70/setPOS?servoPOS=180"); // fetch control servo melalui API
             setTimeout(function () {
                 $('#exitToast').toast('hide');
             }, 5000);
         } else {
+            //Ganti sesuai ip yang tersedia nantinya
+            fetch("http://192.168.43.70/setPOS?servoPOS=0"); // fetch control servo melalui API
             $('#exitToast').toast('hide');
             $('#gateStatus2').text('Gate Closed');
+            
         }
     });
 });

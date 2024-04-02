@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Control Servo Motor</title>
+</head>
+<body>
+<div>
+  <input type="text" id="servoValue" name="servoValue" min="0" max="180">
+  <button onclick="sendData()">Submit</button>
+</div>
+
+<script>
+  function sendData() {
+    var servoAngle = document.getElementById("servoValue").value;
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log("Data sent successfully");
+      }
+    };
+    xhttp.open("GET", "http://192.168.43.237/setPOS?servoPOS=" + servoAngle, true);
+    xhttp.send();
+  }
+</script>
+
+</body>
+</html>
