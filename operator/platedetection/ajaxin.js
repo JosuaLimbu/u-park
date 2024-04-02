@@ -66,7 +66,12 @@ $(document).ready(function () {
                                     },
                                     success: function (response) {
                                         console.log(response);
-                                        // Tidak ada toast yang ditampilkan
+                                        if ($('#gateSwitch1').is(':checked')) {
+                                            $('#entranceToast').toast('show');
+                                            setTimeout(function () {
+                                                $('#entranceToast').toast('hide');
+                                            }, 5000);
+                                        }
                                     },
                                     error: function (xhr, status, error) {
                                         console.error(xhr.responseText);
@@ -87,6 +92,7 @@ $(document).ready(function () {
     }
     setInterval(loadData, 100);
 });
+
 
 $(document).ready(function () {
     $('#gateSwitch1').on('change', function () {

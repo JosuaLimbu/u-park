@@ -77,24 +77,23 @@ $(document).ready(function () {
                         dataType: 'json',
                         success: function (response) {
                             if (Object.keys(response).length > 0) {
-                                // Aktifkan switch
-                                $('#gateSwitch').prop('checked', true);
-                                $('#gateStatus').text('Gate Open');
-
                                 // Kirim data ke tbl_vehicleentry
                                 $.ajax({
                                     url: 'out/postvehicleentry.php',
                                     type: 'POST',
                                     data: {
                                         name: response.name,
-                                        plate_number: response.plate_number, // Perbaiki nama parameter plate_number
+                                        plate_number: response.plate_number,
                                     },
                                     success: function (response) {
                                         console.log(response);
-                                        lastPostTime = new Date().getTime(); // Perbaiki currentTime menjadi new Date().getTime()
-                                        // Aktifkan switch jika berhasil
+                                        lastPostTime = new Date().getTime();
                                         $('#gateSwitch2').prop('checked', true);
                                         $('#gateStatus2').text('Gate Open');
+                                        $('#exitToast').toast('show');
+                                        setTimeout(function () {
+                                            $('#exitToast').toast('hide');
+                                        }, 5000);
                                     },
                                     error: function (xhr, status, error) {
                                         console.error(xhr.responseText);
