@@ -93,13 +93,20 @@ $(document).ready(function () {
         var gateStatusText = $('#gateStatus1');
         if ($(this).is(':checked')) {
             gateStatusText.text('Gate Open');
+            $('#entranceToast').toast('show');
+            setTimeout(function () {
+                $('#entranceToast').toast('hide');
+            }, 5000);
         } else {
             gateStatusText.text('Gate Closed');
+            $('#entranceToast').toast('hide');
         }
         if ($(this).is(':checked')) {
             updateGateStatus(1);
         }
     });
 });
+
+
 
 

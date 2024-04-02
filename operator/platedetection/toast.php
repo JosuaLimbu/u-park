@@ -9,14 +9,93 @@
 </head>
 
 <body>
-    <div id="enterStatus">
-        Enter Close
-    </div>
-    <button id="changeEnterBtn">Change Enter</button>
-    <div id="exitStatus">
-        Exit Close
-    </div>
-    <button id="changeExitBtn">Change Exit</button>
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .switch2 {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch2 input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: #04A6B5;
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px #04A6B5;
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    </style>
+    <p>Switch 1</p>
+    <label class="switch">
+        <input type="checkbox" id="gateSwitch1">
+        <span class="slider round"></span>
+    </label>
+    <p id="gateStatus1">Gate Closed</p>
+    <p>Switch 2</p>
+    <label class="switch2">
+        <input type="checkbox" id="gateSwitch2">
+        <span class="slider round"></span>
+    </label>
+    <p id="gateStatus2">Gate Closed</p>
+
     <div aria-live="polite" aria-atomic="true" style="position: absolute; top: 50px; right: 10px; z-index: 1050;">
         <div style="position: relative;">
 
@@ -50,88 +129,38 @@
         </div>
     </div>
 
-    <!-- Script untuk menutup toast saat tombol close ditekan -->
+    <!-- Script untuk menampilkan toast saat halaman dimuat -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function () {
+            $('#gateSwitch1').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#entranceToast').toast('show');
+                    setTimeout(function () {
+                        $('#entranceToast').toast('hide');
+                    }, 5000);
+                } else {
+                    $('#entranceToast').toast('hide');
+                }
+            });
+
+            $('#gateSwitch2').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#exitToast').toast('show');
+                    setTimeout(function () {
+                        $('#exitToast').toast('hide');
+                    }, 5000);
+                } else {
+                    $('#exitToast').toast('hide');
+                }
+            });
+
             $('.close').click(function () {
                 $(this).closest('.toast').toast('hide');
             });
 
-            // Function untuk menyembunyikan toast setelah 5 detik
-            function hideToast(toastId) {
-                setTimeout(function () {
-                    $(toastId).toast('hide');
-                }, 5000);
-            }
-
-            // Function untuk menampilkan toast
-            function showToast(toastId, message) {
-                $(toastId).find('.toast-body').text(message);
-                $(toastId).toast('show');
-                hideToast(toastId);
-            }
-
-            // Menampilkan toast pertama saat halaman dimuat
-            showToast('#entranceToast', 'Entrance Gate opened successfully');
-            showToast('#exitToast', 'Exit Gate opened successfully');
-
-            // Membuat MutationObserver untuk memantau perubahan pada teks enterStatus dan exitStatus
-            var observer = new MutationObserver(function (mutations) {
-                mutations.forEach(function (mutation) {
-                    if (mutation.target.id === 'enterStatus') {
-                        var newText = mutation.target.textContent.trim();
-                        var oldText = mutation.oldValue.trim();
-                        // Memastikan bahwa teks telah kembali ke "Close" sebelum berubah menjadi "Open" lagi
-                        if (oldText === 'Enter Open' && newText === 'Enter Close') {
-                            showToast('#entranceToast', 'Entrance Gate opened successfully');
-                        }
-                    } else if (mutation.target.id === 'exitStatus') {
-                        var newText = mutation.target.textContent.trim();
-                        var oldText = mutation.oldValue.trim();
-                        // Memastikan bahwa teks telah kembali ke "Close" sebelum berubah menjadi "Open" lagi
-                        if (oldText === 'Exit Open' && newText === 'Exit Close') {
-                            showToast('#exitToast', 'Exit Gate opened successfully');
-                        }
-                    }
-                });
-            });
-
-            // Memulai pemantauan pada teks enterStatus dan exitStatus
-            observer.observe(document.getElementById('enterStatus'), { subtree: true, characterData: true, oldValue: true });
-            observer.observe(document.getElementById('exitStatus'), { subtree: true, characterData: true, oldValue: true });
-
-            // Function untuk mengubah teks EnterStatus
-            function changeEnterStatus() {
-                if ($('#enterStatus').text() === 'Enter Close') {
-                    $('#enterStatus').text('Enter Open');
-                } else {
-                    $('#enterStatus').text('Enter Close');
-                }
-            }
-
-            // Function untuk mengubah teks ExitStatus
-            function changeExitStatus() {
-                if ($('#exitStatus').text() === 'Exit Close') {
-                    $('#exitStatus').text('Exit Open');
-                } else {
-                    $('#exitStatus').text('Exit Close');
-                }
-            }
-
-            // Event listener untuk tombol Change Enter
-            $('#changeEnterBtn').click(function () {
-                changeEnterStatus();
-            });
-
-            // Event listener untuk tombol Change Exit
-            $('#changeExitBtn').click(function () {
-                changeExitStatus();
-            });
         });
-
-
     </script>
 </body>
 

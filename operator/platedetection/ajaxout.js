@@ -119,7 +119,16 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('#gateSwitch2').on('change', function () {
         if ($(this).is(':checked')) {
-            updateGateStatus(2);
+            $('#gateStatus2').text('Gate Open');
+            $('#exitToast').toast('show');
+            setTimeout(function () {
+                $('#exitToast').toast('hide');
+            }, 5000);
+        } else {
+            $('#exitToast').toast('hide');
+            $('#gateStatus2').text('Gate Closed');
         }
     });
 });
+
+

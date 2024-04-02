@@ -158,36 +158,16 @@ $page = 'platedetection'; //buat page aktif di sidebar
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $('.close').click(function () {
-                $(this).closest('.toast').toast('hide');
-            });
 
-            function hideToast(toastId) {
-                setTimeout(function () {
-                    $(toastId).toast('hide');
-                }, 5000);
-            }
 
-            var observer = new MutationObserver(function (mutations) {
-                mutations.forEach(function (mutation) {
-                    if ($('#gateStatus1').text() === 'Gate Open') {
-                        $('#entranceToast').toast('show');
-                        hideToast('#entranceToast');
-                    }
-                    if ($('#gateStatus2').text() === 'Gate Open') {
-                        $('#exitToast').toast('show');
-                        hideToast('#exitToast');
-                    }
-                });
-            });
 
-            observer.observe(document.getElementById('gateStatus1'), { childList: true });
-            observer.observe(document.getElementById('gateStatus2'), { childList: true });
+
+        $('.close').click(function () {
+            $(this).closest('.toast').toast('hide');
         });
+
+
     </script>
-
-
 </body>
 
 </html>
