@@ -101,14 +101,14 @@ $(document).ready(function () {
         if ($(this).is(':checked')) {
             gateStatusText.text('Gate Open');
             //Ganti sesuai ip yang tersedia nantinya
-            fetch("http://192.168.137.211/servo?value=180"); // fetch control servo melalui API
+            fetch("http://192.168.137.48/servo?value=180"); // fetch control servo melalui API
             $('#entranceToast').toast('show');
             setTimeout(function () {
                 $('#entranceToast').toast('hide');
             }, 5000);
         } else {
             //Ganti sesuai ip yang tersedia nantinya
-            fetch("http://192.168.137.211/servo?value=0"); // fetch control servo melalui API
+            fetch("http://192.168.137.48/servo?value=0"); // fetch control servo melalui API
             gateStatusText.text('Gate Closed');
             $('#entranceToast').toast('hide');
         }
@@ -121,7 +121,7 @@ $(document).ready(function () {
 //Fungsi auto close gate ketika ultrasonic mendeteksi objek
 document.addEventListener("DOMContentLoaded", function() {
     function loadData() {
-        fetch('http://192.168.137.211/ultrasonic') // fetch data dari Ultrasonic lewat API
+        fetch('http://192.168.137.48/ultrasonic') // fetch data dari Ultrasonic lewat API
             .then(response => response.text()) 
             .then(data => {
                 var ultrasonicValue = parseInt(data);
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     if (ultrasonicValue < 30) {
                         document.getElementById('gateSwitch1').checked = false;
                         document.getElementById('gateStatus1').innerText = 'Gate Closed';
-                        fetch("http://192.168.137.211/servo?value=0"); // fetch control servo melalui API
+                        fetch("http://192.168.137.48/servo?value=0"); // fetch control servo melalui API
                     } 
                 } else {
                     console.error('Invalid ultrasonic value:', data);

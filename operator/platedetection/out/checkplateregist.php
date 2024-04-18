@@ -24,7 +24,7 @@ if ($result->num_rows > 0) {
     echo json_encode($data);
 } else {
     // Mengembalikan pesan error jika nomor plat tidak ditemukan
-    echo json_encode(array('error' => 'Nomor plat tidak ditemukan'));
+    echo "not_found";
 }
 $conn->close();
 ?>
