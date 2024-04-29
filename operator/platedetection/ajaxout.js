@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(data => {
                 var ultrasonicValue = parseInt(data);
                 if (!isNaN(ultrasonicValue)) {
-                    if (ultrasonicValue < 30) {
+                    if (ultrasonicValue < 10) {
                         document.getElementById('gateSwitch1').checked = false;
                         document.getElementById('gateStatus1').innerText = 'Gate Closed';
                         fetch("http://192.168.43.70/setPOS?servoPOS=0"); // fetch control servo melalui API

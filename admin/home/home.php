@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset ($_SESSION["username"]) || !isset ($_SESSION["role"]) || $_SESSION["role"] != "admin") {
+if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
     header("Location: http://localhost/u-park");
 }
 $page = 'home'; //buat page aktif di sidebar
@@ -58,17 +58,17 @@ include 'connect.php';
                 <li>
                     <i class='bx bx-car'></i>
                     <span class="text">
-                        <h3>
+                        <h3 style="font-size: 22px;">
                             <?php
-                            $sql = "SELECT COUNT(*) AS total FROM tbl_vehicleentry WHERE STR_TO_DATE(date, '%d %M %Y') = CURDATE()";
+                            $sql = "SELECT COUNT(*) AS total FROM tbl_vehicleentry WHERE exit_time = '';";
                             $result = mysqli_query($con, $sql);
                             $row = mysqli_fetch_assoc($result);
                             $totalVehicles = $row['total'];
                             echo $totalVehicles;
                             ?>
-                            Vehicle Entry
+                            Places Available
                         </h3>
-                        <p>Today</p>
+                        <p>Empty Parking Count</p>
                     </span>
                 </li>
                 <li>
