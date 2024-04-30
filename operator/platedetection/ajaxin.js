@@ -101,14 +101,14 @@ $(document).ready(function () {
         if ($(this).is(':checked')) {
             gateStatusText.text('Gate Open');
             //Ganti sesuai ip yang tersedia nantinya
-            fetch("http://192.168.137.72/servo?value=180"); // fetch control servo melalui API
+            fetch("http://192.168.137.70/servo?value=180"); // fetch control servo melalui API
             $('#entranceToast').toast('show');
             setTimeout(function () {
                 $('#entranceToast').toast('hide');
             }, 5000);
         } else {
             //Ganti sesuai ip yang tersedia nantinya
-            fetch("http://192.168.137.72/servo?value=0"); // fetch control servo melalui API
+            fetch("http://192.168.137.70/servo?value=0"); // fetch control servo melalui API
             gateStatusText.text('Gate Closed');
             $('#entranceToast').toast('hide');
         }
@@ -120,17 +120,29 @@ $(document).ready(function () {
 
 //Fungsi auto close gate ketika ultrasonic mendeteksi objek
 document.addEventListener("DOMContentLoaded", function() {
+    let belowTenPreviously = false; // Variabel untuk melacak apakah ultrasonik telah menyentuh angka di bawah 10 sebelumnya
+    let countBelowTen = 0; // Variabel untuk menghitung berapa kali ultrasonik menyentuh angka di bawah 10
+
     function loadData() {
-        fetch('http://192.168.137.72/ultrasonic') // fetch data dari Ultrasonic lewat API
+        fetch('http://192.168.137.70/ultrasonic') // fetch data dari Ultrasonic lewat API
             .then(response => response.text()) 
             .then(data => {
                 var ultrasonicValue = parseInt(data);
                 if (!isNaN(ultrasonicValue)) {
-                    if (ultrasonicValue < 30) {
-                        document.getElementById('gateSwitch1').checked = false;
-                        document.getElementById('gateStatus1').innerText = 'Gate Closed';
-                        fetch("http://192.168.137.72/servo?value=0"); // fetch control servo melalui API
-                    } 
+                    if (ultrasonicValue < 10 && !belowTenPreviously) {
+                        belowTenPreviously = true;
+                        countBelowTen++;
+                    } else if (ultrasonicValue >= 10 && belowTenPreviously) {
+                        belowTenPreviously = false;
+                        if (countBelowTen <= 3) { 
+                            setTimeout(function() {
+                                document.getElementById('gateSwitch2').checked = false;
+                                document.getElementById('gateStatus2').innerText = 'Gate Closed';
+                                fetch("http://192.168.137.70/servo?value=0"); // fetch control servo melalui API
+                            }, 3000);
+                        }
+                        countBelowTen = 0; // Reset hitungan
+                    }
                 } else {
                     console.error('Invalid ultrasonic value:', data);
                 }
@@ -140,6 +152,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     setInterval(loadData, 300); 
 });
+
 
 
 
