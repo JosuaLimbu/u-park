@@ -72,6 +72,7 @@ $page = 'platedetection'; //buat page aktif di sidebar
                                     <span class="slider round"></span>
                                 </label>
                                 <p id="gateStatus1">Gate Closed</p>
+                                <p>Ultrasonic : </p>
                             </div>
                         </div>
                     </div>
@@ -154,7 +155,7 @@ $page = 'platedetection'; //buat page aktif di sidebar
     <script src="../components/js/dropdown.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="ajaxin.js"></script>
-    <script src="ajaxout.js"></script>
+    <!-- <script src="ajaxout.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>

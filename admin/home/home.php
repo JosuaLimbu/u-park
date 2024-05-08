@@ -64,7 +64,7 @@ include 'connect.php';
                             $result = mysqli_query($con, $sql);
                             $row = mysqli_fetch_assoc($result);
                             $totalVehicles = $row['total'];
-                            echo $totalVehicles;
+                            echo 31 - $totalVehicles;
                             ?>
                             Places Available
                         </h3>
