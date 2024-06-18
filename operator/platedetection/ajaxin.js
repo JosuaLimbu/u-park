@@ -9,14 +9,14 @@ setInterval(updateImage, 10);
 document.getElementById("enableButton1").addEventListener("click", function () {
     setTimeout(function () {
         document.querySelector(".gate-content-container1").style.display = "block";
-    }, 10);
-    fetch("http://localhost:5000/opencam1");
+    }, 10000);
+    fetch("http://localhost:5000/opencam");
 });
 
 // Function untuk menonaktifkan kamera pintu masuk
 document.getElementById("disableButton1").addEventListener("click", function () {
     document.querySelector(".gate-content-container1").style.display = "none";
-    fetch("http://localhost:5000/closecam1");
+    fetch("http://localhost:5000/closecam");
 
     // AJAX untuk membersihkan data plat terbaru
     $.ajax({
@@ -91,7 +91,7 @@ $(document).ready(function () {
             }
         });
     }
-    setInterval(loadData, 20000000000000000000000);
+    setInterval(loadData, 10);
 });
 
 

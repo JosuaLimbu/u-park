@@ -72,7 +72,6 @@ $page = 'platedetection'; //buat page aktif di sidebar
                                     <span class="slider round"></span>
                                 </label>
                                 <p id="gateStatus1">Gate Closed</p>
-                                <p>Ultrasonic : </p>
                             </div>
                         </div>
                     </div>

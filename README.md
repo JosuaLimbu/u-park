@@ -6,5 +6,19 @@ U-Park is a parking management system that uses Number Plate Recognition (NPR) t
 This web application is related to the [YOLOv5](https://github.com/JosuaLimbu/yolov5-objectdetect.git) repository which uses Number Plate Recognition with Optical Character Recognition technology.
 
 The end result will be like this.
-![Result1](img/Screenshot1.jpg)
-![Result2](img/Screenshot2.jpg)
+![Result1](img/Picture1.jpg)
+![Result2](img/Picture2.jpg)
+![Result3](img/Picture3.jpg)
+![Result4](img/Picture4.jpg)
+![Result5](img/Picture5.jpg)
+![Result6](img/Picture6.jpg)
+![Result7](img/Picture7.jpg)
+![Result8](img/Picture8.jpg)
+![Result9](img/Picture9.jpg)
+![Result10](img/Picture10.jpg)
+![Result11](img/Picture11.jpg)
+![Result12](img/Picture12.jpg)
+![Result13](img/Picture13.jpg)
+![Result14](img/Picture14.jpg)
+![Result15](img/Picture15.jpg)
+![Result16](img/Picture16.jpg)

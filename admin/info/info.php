@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset ($_SESSION["username"]) || !isset ($_SESSION["role"]) || $_SESSION["role"] != "admin") {
+if (!isset($_SESSION["username"]) || !isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
     header("Location: http://localhost/u-park");
 }
 $page = 'info'; //buat page aktif di sidebar
@@ -50,7 +50,7 @@ $page = 'info'; //buat page aktif di sidebar
                     </div>
                     <span class="text">
                         <p>U-Park, which stands for "Unklab Parking", is an application system born out of an innovative
-                            collaboration between Limbu, Josua and Korengkeng, Vito Julio, in response to the demands of
+                            collaboration between Limbu, Josua in response to the demands of
                             their Research Project. Adapting cutting-edge technologies such as Deep Learning and
                             Internet Of Things and combining them with the practical needs of users, U-Park emerged as a
                             revolutionary solution in parking management at the Klabat University complex. <br>
@@ -74,7 +74,7 @@ $page = 'info'; //buat page aktif di sidebar
                             addressing parking needs on campus. <br>
                             For information, assistance, or how to use, please contact <a
                                 href="https://wa.me/6285756958367">+62857 5695 8367</a>.
-                        <p style="text-align: center;">©2024 Limbu, Josua and Korengkeng, Vito Julio. All rights
+                        <p style="text-align: center;">©2024 Limbu, Josua All rights
                             reserved.</p>
                         </p>
                     </span>

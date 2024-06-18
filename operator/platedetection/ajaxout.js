@@ -8,13 +8,13 @@ setInterval(updateExitGateImage, 80);
 document.getElementById("enableButton2").addEventListener("click", function () {
     setTimeout(function () {
         document.querySelector(".gate-content-container2").style.display = "block";
-    }, 10)
-    fetch("http://localhost:5000/opencam2");
+    }, 10000)
+    fetch("http://localhost:5000/opencam");
 });
 
 document.getElementById("disableButton2").addEventListener("click", function () {
     document.querySelector(".gate-content-container2").style.display = "none";
-    fetch("http://localhost:5000/closecam2");
+    fetch("http://localhost:5000/closecam");
 
     $.ajax({
         url: 'out/clearplateout.php',
